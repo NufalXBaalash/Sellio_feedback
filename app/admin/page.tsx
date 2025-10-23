@@ -374,7 +374,7 @@ export default function AdminPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
                   onClick={handleExport}
-                  disabled={isLoading || (stats && stats.totalSubmissions === 0)}
+                  disabled={!!isLoading || (stats?.totalSubmissions === 0)}
                   className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Exporting...' : 'Download CSV File'}
