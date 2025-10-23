@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import AlertModal from '../../components/alert-modal'
 
 interface FeedbackStats {
@@ -228,12 +229,12 @@ export default function AdminPage() {
           </form>
 
           <div className="text-center mt-6">
-            <a 
+            <Link 
               href="/" 
               className="text-gray-600 hover:text-green-600 transition-colors"
             >
               Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -401,12 +402,12 @@ export default function AdminPage() {
           </div>
 
           <div className="text-center mt-8">
-            <a 
+            <Link 
               href="/" 
               className="text-gray-600 hover:text-green-600 transition-colors"
             >
               Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>
