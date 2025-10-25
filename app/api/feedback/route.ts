@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
         fs.mkdirSync(dataDir, { recursive: true })
       }
 
-      const csvPath = path.join(dataDir, 'sellio-feedback.csv')
+      const csvPath = path.join(dataDir, 'SELLIOai-feedback.csv')
       const fileExists = fs.existsSync(csvPath)
       
       if (!fileExists) {

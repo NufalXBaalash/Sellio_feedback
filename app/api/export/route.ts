@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       console.error('Error getting data from Supabase:', supabaseError)
       
       // Fallback to CSV file
-      const csvPath = path.join(process.cwd(), 'data', 'sellio-feedback.csv')
+      const csvPath = path.join(process.cwd(), 'data', 'SELLIOai-feedback.csv')
       if (fs.existsSync(csvPath)) {
         try {
           const csvData = fs.readFileSync(csvPath, 'utf8')
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
     // Set headers for file download
     const headers_response = new Headers()
     headers_response.set('Content-Type', 'text/csv; charset=utf-8')
-    headers_response.set('Content-Disposition', 'attachment; filename="sellio-feedback.csv"')
+    headers_response.set('Content-Disposition', 'attachment; filename="SELLIOai-feedback.csv"')
     headers_response.set('Cache-Control', 'no-cache')
     
     return new NextResponse(csvWithBom, {

@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     // Also reset CSV file (backup)
     try {
       const dataDir = path.join(process.cwd(), 'data')
-      const csvPath = path.join(dataDir, 'sellio-feedback.csv')
+      const csvPath = path.join(dataDir, 'SELLIOai-feedback.csv')
       
       console.log('Data directory:', dataDir)
       console.log('CSV path:', csvPath)

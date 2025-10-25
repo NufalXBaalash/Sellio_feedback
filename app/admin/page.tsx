@@ -81,7 +81,7 @@ export default function AdminPage() {
         const a = document.createElement('a')
         a.style.display = 'none'
         a.href = url
-        a.download = 'sellio-feedback.csv'
+        a.download = 'SELLIOai-feedback.csv'
         document.body.appendChild(a)
         a.click()
         window.URL.revokeObjectURL(url)
