@@ -4,27 +4,27 @@
 
 @layer base {
   :root {
-    --SELLIOai-primary: 142 76% 36%;
-    --SELLIOai-accent: 142 76% 46%;
-    --SELLIOai-secondary: 0 0% 98%;
-    --SELLIOai-tertiary: 0 0% 96%;
-    --SELLIOai-gray: 0 0% 45%;
-    --SELLIOai-dark: 0 0% 9%;
+    --SellioAI-primary: 142 76% 36%;
+    --SellioAI-accent: 142 76% 46%;
+    --SellioAI-secondary: 0 0% 98%;
+    --SellioAI-tertiary: 0 0% 96%;
+    --SellioAI-gray: 0 0% 45%;
+    --SellioAI-dark: 0 0% 9%;
   }
 }
 
 @layer components {
-  /* SELLIOai gradient backgrounds */
+  /* SellioAI gradient backgrounds */
   .bg-gradient-primary {
-    background: linear-gradient(135deg, hsl(var(--SELLIOai-primary)) 0%, hsl(var(--SELLIOai-accent)) 100%);
+    background: linear-gradient(135deg, hsl(var(--SellioAI-primary)) 0%, hsl(var(--SellioAI-accent)) 100%);
   }
   
   .bg-gradient-secondary {
-    background: linear-gradient(135deg, hsl(var(--SELLIOai-accent)) 0%, hsl(var(--SELLIOai-primary)) 100%);
+    background: linear-gradient(135deg, hsl(var(--SellioAI-accent)) 0%, hsl(var(--SellioAI-primary)) 100%);
   }
   
   .bg-gradient-accent {
-    background: linear-gradient(135deg, hsl(var(--SELLIOai-primary)) 0%, hsl(var(--SELLIOai-accent)) 50%, hsl(var(--SELLIOai-primary)) 100%);
+    background: linear-gradient(135deg, hsl(var(--SellioAI-primary)) 0%, hsl(var(--SellioAI-accent)) 50%, hsl(var(--SellioAI-primary)) 100%);
   }
   
   /* Glass morphism effect */
@@ -37,7 +37,7 @@
     @apply glass rounded-2xl p-6 hover:bg-white/20 transition-all duration-300;
   }
   
-  /* SELLIOai button styling */
+  /* SellioAI button styling */
   .btn-primary {
     @apply bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105;
   }
@@ -53,7 +53,7 @@
   
   /* Hero section styling */
   .hero-bg {
-    background: linear-gradient(135deg, hsl(var(--SELLIOai-secondary)) 0%, hsl(var(--SELLIOai-tertiary)) 50%, hsl(var(--SELLIOai-primary)) 100%);
+    background: linear-gradient(135deg, hsl(var(--SellioAI-secondary)) 0%, hsl(var(--SellioAI-tertiary)) 50%, hsl(var(--SellioAI-primary)) 100%);
     position: relative;
     overflow: hidden;
   }

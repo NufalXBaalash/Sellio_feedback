@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       console.error('Error getting data from Supabase:', supabaseError)
       
       // Fallback to CSV file
-      const csvPath = path.join(process.cwd(), 'data', 'SELLIOai-feedback.csv')
+      const csvPath = path.join(process.cwd(), 'data', 'SellioAI-feedback.csv')
       if (fs.existsSync(csvPath)) {
         try {
           const csvData = fs.readFileSync(csvPath, 'utf8')

@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'SELLIOai - Your Opinion Matters',
-  description: 'Share your feedback about SELLIOai and get an exclusive launch discount',
+  title: 'SellioAI - Your Opinion Matters',
+  description: 'Share your feedback about SellioAI and get an exclusive launch discount',
 }
 
 export default function RootLayout({

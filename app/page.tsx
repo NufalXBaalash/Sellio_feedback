@@ -56,9 +56,9 @@ export default function Home() {
 
   const translations = {
     en: {
-      title: 'SELLIOai',
+      title: 'SellioAI',
       subtitle: 'The Ultimate E-commerce Automation Platform',
-      description: 'SELLIOai is a revolutionary website and app that simplifies e-commerce and selling. It automatically responds to customers, shows them products, explains all details, takes shipping information, creates orders, and handles shipping - all while you relax and just post on your social media pages.',
+      description: 'SellioAI is a revolutionary website and app that simplifies e-commerce and selling. It automatically responds to customers, shows them products, explains all details, takes shipping information, creates orders, and handles shipping - all while you relax and just post on your social media pages.',
       features: {
         products: {
           title: 'Smart Product Management',
@@ -77,14 +77,14 @@ export default function Home() {
           description: 'AI-driven insights about your sales performance and customer behavior patterns'
         }
       },
-      question: 'Do you think SELLIOai would be useful for you as a store owner?',
+      question: 'Do you think SellioAI would be useful for you as a store owner?',
       options: {
         yes: '✅ Yes, it would be very useful',
         no: '❌ No, I don\'t think it would be useful'
       },
       emailLabel: 'Email (for exclusive launch discount)',
       feedbackLabel: 'Share your thoughts',
-      feedbackPlaceholder: 'What do you think about SELLIOai? What features interest you most?',
+      feedbackPlaceholder: 'What do you think about SellioAI? What features interest you most?',
       submit: 'Submit Feedback',
       submitting: 'Submitting...',
       success: {
@@ -92,10 +92,10 @@ export default function Home() {
         message: 'Your feedback has been received successfully. We\'ll contact you soon with an exclusive launch discount!',
         discount: '🎉 You\'ll receive a special launch discount via email!'
       },
-      tryNow: 'Want to try SELLIOai now?',
+      tryNow: 'Want to try SellioAI now?',
       discountSection: {
         title: '🎉 Exclusive Launch Discount!',
-        subtitle: 'Be among the first to experience SELLIOai',
+        subtitle: 'Be among the first to experience SellioAI',
         description: 'Sign up now and get a special discount when we launch!',
         features: [
           'Early access to all features',
@@ -107,9 +107,9 @@ export default function Home() {
       }
     },
     ar: {
-      title: 'SELLIOai',
+      title: 'SellioAI',
       subtitle: 'منصة أتمتة التجارة الإلكترونية الرائدة',
-      description: 'SELLIOai هو موقع وتطبيق ثوري يبسط التجارة الإلكترونية والبيع. يرد تلقائياً على العملاء، ويعرض لهم المنتجات، ويشرح جميع التفاصيل، ويأخذ معلومات الشحن، وينشئ الطلبات، ويتولى الشحن - كل هذا وأنت مستريح وتنشر فقط على صفحاتك الاجتماعية.',
+      description: 'SellioAI هو موقع وتطبيق ثوري يبسط التجارة الإلكترونية والبيع. يرد تلقائياً على العملاء، ويعرض لهم المنتجات، ويشرح جميع التفاصيل، ويأخذ معلومات الشحن، وينشئ الطلبات، ويتولى الشحن - كل هذا وأنت مستريح وتنشر فقط على صفحاتك الاجتماعية.',
       features: {
         products: {
           title: 'إدارة المنتجات الذكية',
@@ -128,14 +128,14 @@ export default function Home() {
           description: 'رؤى مدعومة بالذكاء الاصطناعي حول أداء مبيعاتك وأنماط سلوك العملاء'
         }
       },
-      question: 'هل تعتقد أن SELLIOai سيكون مفيداً لك كصاحب متجر؟',
+      question: 'هل تعتقد أن SellioAI سيكون مفيداً لك كصاحب متجر؟',
       options: {
         yes: 'نعم، سيكون مفيداً جداً',
         no: 'لا، لا أعتقد أنه سيكون مفيداً'
       },
       emailLabel: 'البريد الإلكتروني (للحصول على خصم حصري عند الإطلاق)',
       feedbackLabel: 'شاركنا رأيك',
-      feedbackPlaceholder: 'ما رأيك في SELLIOai؟ ما الميزات التي تهمك أكثر؟',
+      feedbackPlaceholder: 'ما رأيك في SellioAI؟ ما الميزات التي تهمك أكثر؟',
       submit: 'إرسال رأيك',
       submitting: 'جاري الإرسال...',
       success: {
@@ -143,10 +143,10 @@ export default function Home() {
         message: 'تم استلام رأيك بنجاح. سنتواصل معك قريباً مع خصم حصري عند الإطلاق!',
         discount: '🎉 ستحصل على خصم خاص عند الإطلاق عبر البريد الإلكتروني!'
       },
-      tryNow: 'تريد تجربة SELLIOai الآن؟',
+      tryNow: 'تريد تجربة SellioAI الآن؟',
       discountSection: {
         title: '🎉 خصم حصري عند الإطلاق!',
-        subtitle: 'كن من أوائل من يجرب SELLIOai',
+        subtitle: 'كن من أوائل من يجرب SellioAI',
         description: 'سجل الآن واحصل على خصم خاص عند إطلاقنا!',
         features: [
           'وصول مبكر لجميع الميزات',

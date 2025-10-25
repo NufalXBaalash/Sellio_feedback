@@ -1,7 +1,7 @@
 # Google Sheets Integration Setup Guide
 
 ## Overview
-Your SELLIOai feedback landing page now automatically syncs all collected data to your Google Sheet. Here's how to set it up:
+Your SellioAI feedback landing page now automatically syncs all collected data to your Google Sheet. Here's how to set it up:
 
 ## Step 1: Create a Google Service Account
 
@@ -17,8 +17,8 @@ Your SELLIOai feedback landing page now automatically syncs all collected data t
 1. Go to "APIs & Services" > "Credentials"
 2. Click "Create Credentials" > "Service Account"
 3. Fill in the service account details:
-   - Name: `SELLIOai-feedback-service`
-   - Description: `Service account for SELLIOai feedback data sync`
+   - Name: `SellioAI-feedback-service`
+   - Description: `Service account for SellioAI feedback data sync`
 4. Click "Create and Continue"
 5. Skip the optional steps and click "Done"
 
@@ -36,7 +36,7 @@ Your SELLIOai feedback landing page now automatically syncs all collected data t
 1. Open your Google Sheet: https://docs.google.com/spreadsheets/d/1164uwttfL3RBivYN3a588OX_9DdzjxUW1eH1sSfWFJE/edit
 2. Click the "Share" button
 3. Add the service account email (from the JSON file) as an editor
-4. The email will look like: `SELLIOai-feedback-service@your-project-id.iam.gserviceaccount.com`
+4. The email will look like: `SellioAI-feedback-service@your-project-id.iam.gserviceaccount.com`
 
 ## Step 5: Configure Environment Variables
 

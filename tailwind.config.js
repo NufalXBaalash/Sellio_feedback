@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        SELLIOai: {
+        SellioAI: {
           primary: '#6366f1',
           secondary: '#8b5cf6',
           accent: '#06b6d4',
