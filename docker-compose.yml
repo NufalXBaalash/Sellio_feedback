@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  sellio-feedback:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sellio-feedback
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    volumes:
+      - ./data:/app/data
+    environment:
+      - NODE_ENV=production

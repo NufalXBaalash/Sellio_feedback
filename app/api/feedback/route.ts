@@ -3,6 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import GoogleSheetsService from '../../../lib/google-sheets'
 import { supabase, FeedbackData } from '../../../lib/supabase'
+import { sendWaitlistEmail } from '../../../lib/mailer'
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,20 +30,20 @@ export async function POST(request: NextRequest) {
     // Save to Supabase (primary storage)
     try {
       if (!supabase) {
-        throw new Error('Supabase not configured - missing environment variables')
+        console.warn('Supabase not configured - skipping Supabase save. Falling back to CSV.')
+      } else {
+        const { data, error } = await supabase
+          .from('feedback')
+          .insert([feedbackData])
+          .select()
+
+        if (error) {
+          console.error('Supabase error:', error)
+          // We don't throw here either so we can still save to CSV and send email
+        } else {
+          console.log('Data saved to Supabase successfully:', data)
+        }
       }
-
-      const { data, error } = await supabase
-        .from('feedback')
-        .insert([feedbackData])
-        .select()
-
-      if (error) {
-        console.error('Supabase error:', error)
-        throw new Error(`Supabase error: ${error.message}`)
-      }
-
-      console.log('Data saved to Supabase successfully:', data)
     } catch (supabaseError) {
       console.error('Error saving to Supabase:', supabaseError)
       return NextResponse.json(
@@ -93,6 +94,15 @@ export async function POST(request: NextRequest) {
     } catch (sheetsError) {
       console.error('Error syncing to Google Sheets:', sheetsError)
       // Don't fail the request if Google Sheets sync fails
+    }
+
+    // Send the Waitlist Thank You Email
+    try {
+      await sendWaitlistEmail(email.trim());
+      console.log('Waitlist email sent to:', email);
+    } catch (emailError) {
+      console.error('Error sending waitlist email:', emailError);
+      // Don't fail the request if email sending fails, the user is still registered
     }
 
     return NextResponse.json(
