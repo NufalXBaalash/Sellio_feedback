@@ -247,26 +247,28 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fdf9] text-gray-800 font-sans selection:bg-[#27AE60]/20 overflow-x-hidden relative" dir={isAr ? 'rtl' : 'ltr'}>
+    <div
+      className="min-h-screen bg-[#f8fdf9] text-gray-800 font-sans selection:bg-[#27AE60]/20 overflow-x-hidden relative"
+      dir={isAr ? 'rtl' : 'ltr'}
+      style={isAr ? { fontSize: '0.93em' } : {}}
+    >
       
       {/* Header */}
       <header className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-2xl border-b border-gray-200/60 shadow-[0_2px_20px_rgba(0,0,0,0.04)] transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10 bg-white rounded-xl overflow-hidden flex items-center justify-center border border-gray-200 shadow-sm">
-              <img src="/assets/logo/dark.png" alt="SellioAI Logo" className="w-8 h-8 object-contain" />
-            </div>
-            <span className="text-xl font-bold tracking-tight text-gray-900">SellioAI</span>
+            <img src="/assets/logo/dark.png" alt="SellioAI Logo" className="h-10 md:h-12 w-auto object-contain" />
+            <span className="text-xl font-bold tracking-tight text-gray-900 hidden sm:inline-block">SellioAI</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <button 
               onClick={() => setLang(isAr ? 'en' : 'ar')}
-              className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 border border-gray-200 shadow-sm px-4 py-2 rounded-full transition-all"
+              className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 border border-gray-200 shadow-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all"
             >
-              <Globe className="w-4 h-4" />
+              <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               {isAr ? 'English' : 'عربي'}
             </button>
-            <button onClick={scrollToWaitlist} className="hidden sm:block text-sm font-semibold text-white bg-[#27AE60] hover:bg-[#219a52] px-6 py-2.5 rounded-full transition-all shadow-[0_4px_15px_rgba(39,174,96,0.25)] hover:shadow-[0_4px_20px_rgba(39,174,96,0.4)]">
+            <button onClick={scrollToWaitlist} className="hidden sm:block text-sm font-semibold text-white bg-[#27AE60] hover:bg-[#219a52] px-5 py-2 rounded-full transition-all shadow-[0_4px_15px_rgba(39,174,96,0.25)] hover:shadow-[0_4px_20px_rgba(39,174,96,0.4)]">
               {t.navJoin}
             </button>
           </div>
@@ -274,14 +276,14 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-40 pb-20 px-6 min-h-[85vh] flex flex-col items-center justify-center text-center z-10 overflow-hidden">
+      <section className="relative pt-28 sm:pt-36 md:pt-44 pb-14 sm:pb-20 px-4 sm:px-6 min-h-[85vh] flex flex-col items-center justify-center text-center z-10 overflow-hidden">
         <AnimatedHeroBackground />
         <div className="max-w-4xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-[#27AE60]/30 text-sm font-medium text-[#27AE60] mb-8 shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-white border border-[#27AE60]/30 text-xs sm:text-sm font-medium text-[#27AE60] mb-6 sm:mb-8 shadow-sm"
           >
             <span className="w-2 h-2 rounded-full bg-[#27AE60] animate-pulse" />
             {t.waitlistOpen}
@@ -291,12 +293,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1] text-gray-900"
+            className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1] text-gray-900"
           >
             {t.titleLine1}<br />
             {t.titleLine2} <span className="text-[#27AE60] relative inline-block">
               {t.titleHighlight}
-              <svg className="absolute w-full h-3 -bottom-1 left-0 text-[#27AE60]/30" viewBox="0 0 100 20" preserveAspectRatio="none">
+              <svg className="absolute w-full h-2 md:h-3 -bottom-1 left-0 text-[#27AE60]/30" viewBox="0 0 100 20" preserveAspectRatio="none">
                 <path d="M0 15 Q 50 0 100 15" stroke="currentColor" strokeWidth="8" fill="transparent" />
               </svg>
             </span>
@@ -306,7 +308,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
-            className="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-gray-500 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0"
           >
             {t.description}
             <strong className="text-gray-900 font-bold"> {t.discountHighlight}</strong>
@@ -317,11 +319,11 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full sm:w-auto"
           >
             <button 
               onClick={scrollToWaitlist}
-              className="group h-14 px-8 rounded-full bg-[#27AE60] text-white font-bold text-lg hover:bg-[#219a52] transition-colors flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(39,174,96,0.3)] hover:shadow-[0_4px_30px_rgba(39,174,96,0.45)] hover:-translate-y-0.5 duration-300"
+              className="group w-full sm:w-auto h-13 sm:h-14 px-7 sm:px-8 rounded-full bg-[#27AE60] text-white font-bold text-base sm:text-lg hover:bg-[#219a52] transition-colors flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(39,174,96,0.3)] hover:shadow-[0_4px_30px_rgba(39,174,96,0.45)] hover:-translate-y-0.5 duration-300"
             >
               {t.claimButton}
               {isAr ? (
@@ -335,27 +337,27 @@ export default function Home() {
       </section>
 
       {/* Bento Grid */}
-      <section className="py-24 px-6 relative z-20 border-t border-gray-200/60 bg-white/60 backdrop-blur-xl shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
+      <section className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 relative z-20 border-t border-gray-200/60 bg-white/60 backdrop-blur-xl shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: EASE }}
-            className="text-center mb-20"
+            className="text-center mb-10 md:mb-20"
           >
             <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#27AE60] mb-4 bg-[#27AE60]/10 px-4 py-1.5 rounded-full border border-[#27AE60]/20 shadow-[0_0_10px_rgba(39,174,96,0.1)]">
               {t.featuresLabel}
             </span>
-            <h2 className="text-3xl md:text-5xl font-bold mb-5 text-gray-900">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-5 text-gray-900">
               {t.featuresTitle}
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+            <p className="text-gray-500 max-w-2xl mx-auto text-base sm:text-lg">
               {t.featuresDesc}
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-[300px] gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-min md:auto-rows-[300px] gap-6">
             
             {/* 1. AI Store Creation (Large/Hero Card) */}
             <motion.div
@@ -364,7 +366,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.8, ease: EASE }}
-              className="md:col-span-2 lg:col-span-2 lg:row-span-2 relative bg-white rounded-[2rem] border border-gray-200 p-8 md:p-10 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 group"
+              className="md:col-span-2 lg:col-span-2 lg:row-span-2 relative bg-white rounded-[2rem] border border-gray-200 p-6 md:p-10 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 group min-h-[300px] md:min-h-0"
             >
               <div className="absolute top-0 right-0 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_top_right,_rgba(39,174,96,0.15),_transparent_50%)] pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10 flex flex-col h-full justify-between">
@@ -372,18 +374,30 @@ export default function Home() {
                   <div className="w-14 h-14 rounded-2xl bg-[#27AE60]/20 shadow-[0_0_15px_rgba(39,174,96,0.2)] border border-[#27AE60]/30 flex items-center justify-center mb-6">
                     <Store className="w-7 h-7 text-[#27AE60]" />
                   </div>
-                  <h3 className="text-3xl font-bold mb-4 text-gray-900">{t.storeTitle}</h3>
-                  <p className="text-gray-500 leading-relaxed text-lg max-w-md">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">{t.storeTitle}</h3>
+                  <p className="text-gray-500 leading-relaxed text-base md:text-lg max-w-md">
                     {t.storeDesc}
                   </p>
                 </div>
-                <div className="bg-gray-50 rounded-[2rem] p-6 border border-gray-100 shadow-inner relative flex flex-col justify-center items-center mt-8 flex-1">
-                   <div className="w-full flex items-center gap-3 p-4 border border-[#27AE60]/20 bg-[#27AE60]/5 rounded-2xl shadow-sm mb-4">
-                     <Bot className="w-6 h-6 text-[#27AE60]" />
+                <div className="bg-gray-50 rounded-[2rem] p-4 md:p-6 border border-gray-100 shadow-inner relative flex flex-col justify-center items-center mt-8 flex-1">
+                   <motion.div 
+                     initial={{ opacity: 0, scale: 0.9 }}
+                     whileInView={{ opacity: 1, scale: 1 }}
+                     transition={{ duration: 0.5, delay: 0.3 }}
+                     className="w-full flex items-center gap-3 p-4 border border-[#27AE60]/20 bg-[#27AE60]/5 rounded-2xl shadow-sm mb-4"
+                   >
+                     <motion.div animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+                       <Bot className="w-6 h-6 text-[#27AE60]" />
+                     </motion.div>
                      <span className="text-sm text-gray-700 font-medium">{isAr ? "إنشاء متجر للملابس الصيفية..." : "Creating Summer Clothing Store..."}</span>
-                   </div>
+                   </motion.div>
                    <div className="w-[85%] h-2.5 bg-gray-200 rounded-full overflow-hidden shadow-inner">
-                     <div className="w-full h-full bg-gradient-to-r from-[#27AE60]/50 to-[#27AE60] animate-pulse" />
+                     <motion.div 
+                       initial={{ width: "0%" }}
+                       whileInView={{ width: "100%" }}
+                       transition={{ duration: 3, ease: "easeOut", repeat: Infinity, repeatDelay: 1 }}
+                       className="h-full bg-gradient-to-r from-[#27AE60]/50 to-[#27AE60]" 
+                     />
                    </div>
                 </div>
               </div>
@@ -396,31 +410,41 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-              className="md:col-span-2 lg:col-span-2 relative bg-white rounded-[2rem] border border-gray-200 p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 group"
+              className="md:col-span-2 lg:col-span-2 relative bg-white rounded-[2rem] border border-gray-200 p-6 md:p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 group min-h-[300px] md:min-h-0"
             >
               <div className="absolute bottom-0 right-0 w-[100%] h-[100%] bg-[radial-gradient(ellipse_at_bottom_right,_rgba(39,174,96,0.1),_transparent_60%)] pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10 flex flex-col sm:flex-row gap-8 h-full items-center">
-                <div className="flex-1">
-                  <div className="w-12 h-12 rounded-2xl bg-[#27AE60]/20 shadow-[0_0_15px_rgba(39,174,96,0.2)] border border-[#27AE60]/30 flex items-center justify-center mb-4">
+              <div className="relative z-10 flex flex-col sm:flex-row gap-6 md:gap-8 h-full items-center">
+                <div className="flex-1 w-full text-center sm:text-start">
+                  <div className="w-12 h-12 rounded-2xl bg-[#27AE60]/20 shadow-[0_0_15px_rgba(39,174,96,0.2)] border border-[#27AE60]/30 flex items-center justify-center mb-4 mx-auto sm:mx-0">
                     <Package className="w-6 h-6 text-[#27AE60]" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-2 text-gray-900">{t.crmTitle}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 text-gray-900">{t.crmTitle}</h3>
                   <p className="text-gray-500 leading-relaxed text-sm">
                     {t.crmDesc}
                   </p>
                 </div>
-                <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 space-y-3 shadow-inner w-full sm:w-1/2">
+                <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 space-y-3 shadow-inner w-full sm:w-1/2 mt-4 sm:mt-0">
                   {[
                     { title: isAr ? 'تم تحديث المخزون' : 'Inventory Updated', time: '2m ago' },
                     { title: isAr ? 'تم تأكيد طلب جديد' : 'New Order Confirmed', time: '15m ago' }
                   ].map((log, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                      <div className={`w-2 h-2 rounded-full bg-[#27AE60]`} />
-                      <div className="flex-1">
+                    <motion.div 
+                      key={i}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: 0.2 + (i * 0.2) }}
+                      className="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-100 shadow-sm"
+                    >
+                      <motion.div 
+                        animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }} 
+                        transition={{ duration: 2, repeat: Infinity, delay: i }}
+                        className={`w-2 h-2 rounded-full bg-[#27AE60]`} 
+                      />
+                      <div className="flex-1 text-start">
                         <div className="font-semibold text-xs text-gray-800">{log.title}</div>
                         <div className="text-[10px] text-gray-400 mt-0.5">{log.time}</div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -433,11 +457,15 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
-              className="lg:col-span-1 relative bg-white rounded-[2rem] border border-gray-200 p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 flex flex-col"
+              className="lg:col-span-1 relative bg-white rounded-[2rem] border border-gray-200 p-6 md:p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 flex flex-col min-h-[250px] md:min-h-0"
             >
-              <div className="w-12 h-12 rounded-2xl bg-[#27AE60]/20 shadow-[0_0_15px_rgba(39,174,96,0.2)] border border-[#27AE60]/30 flex items-center justify-center mb-5 mt-auto">
+              <motion.div 
+                animate={{ y: [0, -8, 0] }} 
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="w-12 h-12 rounded-2xl bg-[#27AE60]/20 shadow-[0_0_15px_rgba(39,174,96,0.2)] border border-[#27AE60]/30 flex items-center justify-center mb-5 mt-auto"
+              >
                 <MessageCircle className="w-6 h-6 text-[#27AE60]" />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-bold mb-2 text-gray-900">{t.assistantTitle}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">
                 {t.assistantDesc}
@@ -451,11 +479,15 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
-              className="lg:col-span-1 relative bg-white rounded-[2rem] border border-gray-200 p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 flex flex-col"
+              className="lg:col-span-1 relative bg-white rounded-[2rem] border border-gray-200 p-6 md:p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 flex flex-col min-h-[250px] md:min-h-0"
             >
-              <div className="w-12 h-12 rounded-2xl bg-[#27AE60]/20 shadow-[0_0_15px_rgba(39,174,96,0.2)] border border-[#27AE60]/30 flex items-center justify-center mb-5 mt-auto">
+              <motion.div 
+                whileHover={{ rotate: 180 }}
+                transition={{ duration: 0.5 }}
+                className="w-12 h-12 rounded-2xl bg-[#27AE60]/20 shadow-[0_0_15px_rgba(39,174,96,0.2)] border border-[#27AE60]/30 flex items-center justify-center mb-5 mt-auto"
+              >
                 <TrendingUp className="w-6 h-6 text-[#27AE60]" />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-bold mb-2 text-gray-900">{t.scoringTitle}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">
                 {t.scoringDesc}
@@ -469,12 +501,16 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.8, delay: 0.25, ease: EASE }}
-              className="md:col-span-2 lg:col-span-2 relative bg-white rounded-[2rem] border border-gray-200 p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 flex flex-col justify-center"
+              className="md:col-span-2 lg:col-span-2 relative bg-white rounded-[2rem] border border-gray-200 p-6 md:p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 flex flex-col justify-center min-h-[250px] md:min-h-0"
             >
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 shrink-0 rounded-3xl bg-[#27AE60]/20 shadow-[0_0_15px_rgba(39,174,96,0.2)] border border-[#27AE60]/30 flex items-center justify-center">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-start">
+                <motion.div 
+                  animate={{ rotate: 360 }} 
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                  className="w-16 h-16 shrink-0 rounded-3xl bg-[#27AE60]/20 shadow-[0_0_15px_rgba(39,174,96,0.2)] border border-[#27AE60]/30 flex items-center justify-center"
+                >
                   <Clock className="w-8 h-8 text-[#27AE60]" />
-                </div>
+                </motion.div>
                 <div>
                   <h3 className="text-2xl font-bold mb-2 text-gray-900">{t.followupTitle}</h3>
                   <p className="text-gray-500 leading-relaxed text-sm">
@@ -491,7 +527,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
-              className="md:col-span-2 lg:col-span-2 relative bg-white rounded-[2rem] border border-gray-200 p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 flex flex-col justify-center"
+              className="md:col-span-2 lg:col-span-2 relative bg-white rounded-[2rem] border border-gray-200 p-6 md:p-8 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(39,174,96,0.08)] transition-shadow duration-500 flex flex-col justify-center min-h-[250px] md:min-h-0"
             >
               <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-start">
                 <div className="flex-1">
@@ -501,11 +537,11 @@ export default function Home() {
                   </p>
                 </div>
                 {/* Official SVGs from simpleicons */}
-                <div className="flex justify-center gap-4 shrink-0">
-                  <img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="WhatsApp" className="w-10 h-10 hover:scale-110 transition-transform duration-300" />
-                  <img src="https://cdn.simpleicons.org/instagram/E1306C" alt="Instagram" className="w-10 h-10 hover:scale-110 transition-transform duration-300" />
-                  <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" className="w-10 h-10 hover:scale-110 transition-transform duration-300" />
-                  <img src="https://cdn.simpleicons.org/x/111111" alt="X" className="w-9 h-9 hover:scale-110 transition-transform duration-300" />
+                <div className="flex justify-center gap-4 shrink-0 flex-wrap mt-4 sm:mt-0">
+                  <motion.img whileHover={{ scale: 1.2, rotate: 10 }} src="https://cdn.simpleicons.org/whatsapp/25D366" alt="WhatsApp" className="w-10 h-10 cursor-pointer" />
+                  <motion.img whileHover={{ scale: 1.2, rotate: -10 }} src="https://cdn.simpleicons.org/instagram/E1306C" alt="Instagram" className="w-10 h-10 cursor-pointer" />
+                  <motion.img whileHover={{ scale: 1.2, rotate: 10 }} src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" className="w-10 h-10 cursor-pointer" />
+                  <motion.img whileHover={{ scale: 1.2, rotate: -10 }} src="https://cdn.simpleicons.org/x/111111" alt="X" className="w-9 h-9 cursor-pointer" />
                 </div>
               </div>
             </motion.div>
@@ -515,14 +551,14 @@ export default function Home() {
       </section>
 
       {/* Waitlist Form Section */}
-      <section id="waitlist-form" className="py-32 px-6 relative bg-gray-50/80 border-t border-gray-200/60 z-20">
+      <section id="waitlist-form" className="py-14 sm:py-20 md:py-32 px-4 sm:px-6 relative bg-gray-50/80 border-t border-gray-200/60 z-20">
         <div className="max-w-2xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: EASE }}
-            className="bg-white p-10 md:p-14 rounded-[3rem] shadow-[0_20px_60px_rgba(39,174,96,0.08),0_4px_20px_rgba(0,0,0,0.04)] border border-gray-200 relative overflow-hidden"
+            className="bg-white p-6 md:p-14 rounded-[3rem] shadow-[0_20px_60px_rgba(39,174,96,0.08),0_4px_20px_rgba(0,0,0,0.04)] border border-gray-200 relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_rgba(39,174,96,0.1),_transparent_50%)] pointer-events-none" />
             
@@ -531,8 +567,8 @@ export default function Home() {
                 <div className="w-16 h-16 bg-[#27AE60]/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[#27AE60]/20">
                   <Heart className="w-8 h-8 text-[#27AE60] fill-[#27AE60]/30" />
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">{t.secureSpotTitle}</h2>
-                <p className="text-gray-500 text-lg leading-relaxed">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-gray-900">{t.secureSpotTitle}</h2>
+                <p className="text-gray-500 text-base sm:text-lg leading-relaxed">
                   {t.secureSpotDesc}
                   <strong className="text-[#27AE60] bg-[#27AE60]/10 border border-[#27AE60]/20 px-2 py-0.5 rounded-md mx-1">{t.couponHighlight}</strong>
                   {t.secureSpotDescEnd}
@@ -586,7 +622,7 @@ export default function Home() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={!formData.email || isLoading}
-                  className="w-full mt-4 bg-[#27AE60] hover:bg-[#219a52] text-white font-bold py-4 px-8 rounded-2xl shadow-[0_4px_20px_rgba(39,174,96,0.25)] hover:shadow-[0_4px_30px_rgba(39,174,96,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 text-lg"
+                  className="w-full mt-4 bg-[#27AE60] hover:bg-[#219a52] text-white font-bold py-3.5 sm:py-4 px-8 rounded-2xl shadow-[0_4px_20px_rgba(39,174,96,0.25)] hover:shadow-[0_4px_30px_rgba(39,174,96,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 text-base sm:text-lg"
                 >
                   {isLoading ? (
                     <div className="w-6 h-6 border-2 border-[#050505]/30 border-t-[#050505] rounded-full animate-spin" />
