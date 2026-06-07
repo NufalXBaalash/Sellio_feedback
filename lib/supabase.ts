@@ -32,3 +32,33 @@ export interface FeedbackStats {
   }>
   lastUpdated: string
 }
+
+export interface TestSessionRow {
+  id?: string
+  session_id: string
+  language: string
+  status: string
+  landing_viewed_at?: string | null
+  instagram_clicked_at?: string | null
+  test_started_at?: string | null
+  test_returned_at?: string | null
+  survey_started_at?: string | null
+  survey_completed_at?: string | null
+  total_duration_seconds?: number | null
+  conversation_started?: boolean | null
+  ai_accuracy_rating?: number | null
+  order_completed?: boolean | null
+  order_prevented_reason?: string | null
+  order_prevented_text?: string | null
+  issue_severity?: string | null
+  conversation_duration_estimate?: string | null
+  overall_rating?: number | null
+  human_likeness?: string | null
+  trust_level?: string | null
+  business_recommendation?: string | null
+  nps_score?: number | null
+  open_feedback?: string | null
+  user_agent?: string | null
+  created_at?: string
+  updated_at?: string
+}

@@ -6,113 +6,109 @@ import { supabase } from '../../../lib/supabase'
 
 export async function GET(request: NextRequest) {
   try {
-    let feedbackData: any[] = []
-    
-    // Try to get data from Supabase first (primary source)
-    try {
-      if (!supabase) {
-        throw new Error('Supabase not configured - missing environment variables')
-      }
+    const { searchParams } = new URL(request.url)
+    const type = searchParams.get('type') || 'feedback'
 
-      const { data, error } = await supabase
-        .from('feedback')
-        .select('*')
-        .order('timestamp', { ascending: false })
-
-      if (error) {
-        console.error('Supabase error:', error)
-        throw new Error(`Supabase error: ${error.message}`)
-      }
-
-      if (data && data.length > 0) {
-        // Transform Supabase data to match expected format
-        feedbackData = data.map(item => ({
-          email: item.email,
-          isUseful: item.is_useful,
-          feedback: item.feedback || '',
-          timestamp: item.timestamp
-        }))
-        console.log('Data loaded from Supabase for export successfully')
-      }
-    } catch (supabaseError) {
-      console.error('Error getting data from Supabase:', supabaseError)
-      
-      // Fallback to CSV file
-      const csvPath = path.join(process.cwd(), 'data', 'SellioAI-feedback.csv')
-      if (fs.existsSync(csvPath)) {
-        try {
-          const csvData = fs.readFileSync(csvPath, 'utf8')
-          const lines = csvData.trim().split('\n')
-          
-          // Skip header row and parse data
-          for (let i = 1; i < lines.length; i++) {
-            const line = lines[i]
-            if (line.trim()) {
-              const matches = line.match(/"([^"]*)","([^"]*)","([^"]*)","([^"]*)"/)
-              if (matches) {
-                feedbackData.push({
-                  email: matches[1],
-                  isUseful: matches[2],
-                  feedback: matches[3],
-                  timestamp: matches[4]
-                })
-              }
-            }
-          }
-          console.log('Data loaded from CSV for export successfully')
-        } catch (csvError) {
-          console.error('Error reading CSV file:', csvError)
-        }
-      }
-      
-      // If still no data, try Google Sheets as last resort
-      if (feedbackData.length === 0) {
-        try {
-          const sheetsService = new GoogleSheetsService()
-          feedbackData = await sheetsService.getAllFeedback()
-          console.log('Data loaded from Google Sheets for export successfully')
-        } catch (sheetsError) {
-          console.error('Error getting data from Google Sheets:', sheetsError)
-        }
-      }
+    // Sessions export
+    if (type === 'sessions') {
+      return exportSessions()
     }
 
-    // Check if we have any data to export
-    if (feedbackData.length === 0) {
-      return NextResponse.json(
-        { error: 'No feedback data found' },
-        { status: 404 }
-      )
-    }
-
-    // Convert data to CSV format
-    const headers = 'Email,IsUseful,Feedback,Timestamp\n'
-    const csvRows = feedbackData.map(data => 
-      `"${data.email.replace(/"/g, '""')}","${data.isUseful.replace(/"/g, '""')}","${data.feedback.replace(/"/g, '""')}","${data.timestamp}"`
-    ).join('\n')
-    
-    const csvData = headers + csvRows
-    
-    // Add BOM (Byte Order Mark) for proper UTF-8 display in Excel
-    const bom = '\uFEFF'
-    const csvWithBom = bom + csvData
-    
-    // Set headers for file download
-    const headers_response = new Headers()
-    headers_response.set('Content-Type', 'text/csv; charset=utf-8')
-    headers_response.set('Content-Disposition', 'attachment; filename="SellioAI-feedback.csv"')
-    headers_response.set('Cache-Control', 'no-cache')
-    
-    return new NextResponse(csvWithBom, {
-      status: 200,
-      headers: headers_response
-    })
-
+    // Legacy feedback export (unchanged)
+    return exportFeedback()
   } catch (error) {
     console.error('Error exporting data:', error)
-    return NextResponse.json(
-      { error: 'Error exporting data. Please try again.' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Error exporting data. Please try again.' }, { status: 500 })
   }
+}
+
+async function exportFeedback() {
+  let feedbackData: any[] = []
+
+  try {
+    if (!supabase) throw new Error('Supabase not configured')
+    const { data, error } = await supabase.from('feedback').select('*').order('timestamp', { ascending: false })
+    if (error) throw new Error(`Supabase error: ${error.message}`)
+    if (data && data.length > 0) {
+      feedbackData = data.map(item => ({
+        email: item.email, isUseful: item.is_useful, feedback: item.feedback || '', timestamp: item.timestamp
+      }))
+    }
+  } catch (supabaseError) {
+    console.error('Error getting data from Supabase:', supabaseError)
+    const csvPath = path.join(process.cwd(), 'data', 'SellioAI-feedback.csv')
+    if (fs.existsSync(csvPath)) {
+      try {
+        const csvData = fs.readFileSync(csvPath, 'utf8')
+        const lines = csvData.trim().split('\n')
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i]
+          if (line.trim()) {
+            const matches = line.match(/"([^"]*)","([^"]*)","([^"]*)","([^"]*)"/)
+            if (matches) feedbackData.push({ email: matches[1], isUseful: matches[2], feedback: matches[3], timestamp: matches[4] })
+          }
+        }
+      } catch (csvError) { console.error('Error reading CSV:', csvError) }
+    }
+    if (feedbackData.length === 0) {
+      try { const s = new GoogleSheetsService(); feedbackData = await s.getAllFeedback() } catch (e) { /* ignore */ }
+    }
+  }
+
+  if (feedbackData.length === 0) {
+    return NextResponse.json({ error: 'No feedback data found' }, { status: 404 })
+  }
+
+  const headers = 'Email,IsUseful,Feedback,Timestamp\n'
+  const csvRows = feedbackData.map(d => `"${d.email.replace(/"/g, '""')}","${d.isUseful.replace(/"/g, '""')}","${d.feedback.replace(/"/g, '""')}","${d.timestamp}"`).join('\n')
+  const bom = '﻿'
+  const respHeaders = new Headers()
+  respHeaders.set('Content-Type', 'text/csv; charset=utf-8')
+  respHeaders.set('Content-Disposition', 'attachment; filename="SellioAI-feedback.csv"')
+  respHeaders.set('Cache-Control', 'no-cache')
+  return new NextResponse(bom + headers + csvRows, { status: 200, headers: respHeaders })
+}
+
+async function exportSessions() {
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database not configured' }, { status: 500 })
+  }
+
+  const { data, error } = await supabase.from('test_sessions').select('*').order('created_at', { ascending: false })
+  if (error) {
+    console.error('Error fetching sessions:', error)
+    return NextResponse.json({ error: 'Failed to fetch sessions' }, { status: 500 })
+  }
+
+  const sessions = data || []
+  if (sessions.length === 0) {
+    return NextResponse.json({ error: 'No session data found' }, { status: 404 })
+  }
+
+  const columns = [
+    'session_id', 'language', 'status',
+    'landing_viewed_at', 'instagram_clicked_at', 'test_started_at', 'test_returned_at',
+    'survey_started_at', 'survey_completed_at', 'total_duration_seconds',
+    'conversation_started', 'ai_accuracy_rating', 'order_completed',
+    'order_prevented_reason', 'order_prevented_text', 'issue_severity',
+    'conversation_duration_estimate', 'overall_rating', 'human_likeness',
+    'trust_level', 'business_recommendation', 'nps_score', 'open_feedback',
+    'created_at',
+  ]
+
+  const csvEscape = (val: any) => {
+    if (val === null || val === undefined) return '""'
+    const s = String(val).replace(/"/g, '""').replace(/\n/g, ' ').replace(/\r/g, ' ')
+    return `"${s}"`
+  }
+
+  const headerRow = columns.join(',')
+  const dataRows = sessions.map((s: any) => columns.map(c => csvEscape(s[c])).join(',')).join('\n')
+
+  const bom = '﻿'
+  const respHeaders = new Headers()
+  respHeaders.set('Content-Type', 'text/csv; charset=utf-8')
+  respHeaders.set('Content-Disposition', 'attachment; filename="SellioAI-test-sessions.csv"')
+  respHeaders.set('Cache-Control', 'no-cache')
+  return new NextResponse(bom + headerRow + '\n' + dataRows, { status: 200, headers: respHeaders })
 }

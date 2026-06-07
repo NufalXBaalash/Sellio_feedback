@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import GoogleSheetsService from '../../../lib/google-sheets'
 import { supabase, FeedbackData } from '../../../lib/supabase'
-import { sendWaitlistEmail } from '../../../lib/mailer'
+import { sendWaitlistEmail, sendTesterThankYouEmail } from '../../../lib/mailer'
 
 export async function POST(request: NextRequest) {
   try {
@@ -96,12 +96,12 @@ export async function POST(request: NextRequest) {
       // Don't fail the request if Google Sheets sync fails
     }
 
-    // Send the Waitlist Thank You Email
+    // Send the Thank You Email with discount code
     try {
-      await sendWaitlistEmail(email.trim());
-      console.log('Waitlist email sent to:', email);
+      await sendTesterThankYouEmail(email.trim());
+      console.log('Tester thank-you email sent to:', email);
     } catch (emailError) {
-      console.error('Error sending waitlist email:', emailError);
+      console.error('Error sending thank-you email:', emailError);
       // Don't fail the request if email sending fails, the user is still registered
     }
 

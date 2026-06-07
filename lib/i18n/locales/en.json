@@ -1,0 +1,185 @@
+{
+  "common": {
+    "next": "Continue",
+    "back": "Back",
+    "submit": "Submit Feedback",
+    "loading": "Processing...",
+    "languageSwitch": "عربي",
+    "errorNetwork": "A network error occurred. Please try again.",
+    "errorRequired": "Please answer this question before continuing."
+  },
+  "steps": {
+    "landing": {
+      "badge": "🧪 AI Sales Agent Testing",
+      "titleLine1": "Help Us Test Our",
+      "titleLine2": "AI Sales Agent",
+      "description": "We're building an AI that sells products on social media like a real human. We need your help to test it. You'll visit our Instagram store, interact with the AI as a real customer would, and then tell us about your experience.",
+      "cta": "Start Testing",
+      "timeEstimate": "Takes about 5–10 minutes",
+      "whatYoullDo": "What you'll do:",
+      "step1": "Visit our Instagram store",
+      "step2": "Chat with the AI like a real customer",
+      "step3": "Answer a short survey about your experience",
+      "discountBadge": "🎁 Get 50% Off",
+      "discountText": "After you finish, you'll receive a 50% discount code for yourself or anyone you choose. Just enter your email at the end of the feedback."
+    },
+    "instagramCta": {
+      "title": "Visit Our Instagram Store",
+      "description": "Click the button below to open our Instagram store in a new tab. The store is powered by our AI sales agent.",
+      "buttonLabel": "Open Instagram Store",
+      "afterClick": "Instagram opened in a new tab!",
+      "afterClickDesc": "Come back to this tab after you've finished testing."
+    },
+    "instructions": {
+      "title": "How to Test",
+      "subtitle": "Act like a real customer. Be natural and honest.",
+      "instruction1Title": "Browse Products",
+      "instruction1Desc": "Look through the store's products like you normally would.",
+      "instruction2Title": "Ask Questions",
+      "instruction2Desc": "Message the page with questions about products, prices, or shipping.",
+      "instruction3Title": "Try to Order",
+      "instruction3Desc": "Attempt to place an order as a real customer would.",
+      "instruction4Title": "Be Honest",
+      "instruction4Desc": "Don't go easy on the AI. Treat it like any other store.",
+      "instruction5Title": "Stop When Ready",
+      "instruction5Desc": "Stop when you've completed an order, the AI fails, or you decide to stop.",
+      "cta": "I'm Done Testing — Give Feedback",
+      "reminder": "Remember: Come back to this tab when you're done!"
+    },
+    "thankYou": {
+      "title": "Thank You! 🎉",
+      "subtitle": "Your feedback is invaluable",
+      "description": "You've just helped us improve our AI sales agent. Your honest feedback will shape the future of AI-powered commerce.",
+      "detail": "Your responses have been recorded and will be analyzed to improve the AI's performance, accuracy, and customer experience.",
+      "share": "Want to help more? Share this testing link with others!"
+    }
+  },
+  "survey": {
+    "progressLabel": "Question {current} of {total}",
+    "q1_conversationStarted": {
+      "question": "Were you able to start a conversation with the AI?",
+      "yes": "Yes, I started a conversation",
+      "no": "No, I couldn't start one"
+    },
+    "q2_aiAccuracy": {
+      "question": "How accurate were the AI's responses?",
+      "label1": "Very Inaccurate",
+      "label2": "Inaccurate",
+      "label3": "Neutral",
+      "label4": "Accurate",
+      "label5": "Very Accurate"
+    },
+    "q3_orderCompleted": {
+      "question": "Were you able to complete an order?",
+      "yes": "Yes, order placed successfully",
+      "no": "No, I couldn't complete it"
+    },
+    "q4_orderPrevented": {
+      "question": "What prevented you from completing the order?",
+      "selectPlaceholder": "Select a reason...",
+      "optionNoResponse": "AI didn't respond",
+      "optionWrongInfo": "AI gave wrong information",
+      "optionNoPayment": "No payment method available",
+      "optionConfusing": "Process was too confusing",
+      "optionNoStock": "Product out of stock",
+      "optionAiError": "AI had an error or glitch",
+      "optionOther": "Other reason",
+      "textPlaceholder": "Please describe what happened..."
+    },
+    "q5_issueSeverity": {
+      "question": "How severe was the issue you encountered?",
+      "minor": "Minor — small annoyance",
+      "moderate": "Moderate — affected the experience",
+      "major": "Major — prevented completion entirely"
+    },
+    "q6_conversationDuration": {
+      "question": "Approximately how long did you interact with the AI?",
+      "lessThan1": "Less than 1 minute",
+      "oneTo3": "1–3 minutes",
+      "threeTo5": "3–5 minutes",
+      "moreThan5": "More than 5 minutes"
+    },
+    "q7_overallRating": {
+      "question": "How would you rate your overall experience?",
+      "label1": "Terrible",
+      "label2": "Poor",
+      "label3": "Average",
+      "label4": "Good",
+      "label5": "Excellent"
+    },
+    "q8_humanLikeness": {
+      "question": "Did you believe you were talking to a human or an AI?",
+      "definitelyAi": "Definitely AI",
+      "probablyAi": "Probably AI",
+      "notSure": "Not Sure",
+      "probablyHuman": "Probably Human",
+      "definitelyHuman": "Definitely Human"
+    },
+    "q9_trustLevel": {
+      "question": "Would you trust this store enough to actually buy from it?",
+      "yes": "Yes, I'd trust it",
+      "maybe": "Maybe, I'm not sure",
+      "no": "No, I wouldn't trust it"
+    },
+    "q10_businessRecommendation": {
+      "question": "Would you recommend this AI sales experience to another business owner?",
+      "definitely": "Definitely",
+      "probably": "Probably",
+      "notSure": "Not Sure",
+      "probablyNot": "Probably Not",
+      "definitelyNot": "Definitely Not"
+    },
+    "q11_nps": {
+      "question": "How likely are you to recommend this experience to a friend or colleague?",
+      "label0": "Not at all likely",
+      "label10": "Extremely likely"
+    },
+    "q12_openFeedback": {
+      "question": "Tell us about your experience in detail",
+      "placeholder": "What worked well? What felt confusing? What felt broken? What impressed you? What should we improve?",
+      "hint": "Your honest feedback helps us build better AI."
+    }
+  },
+  "admin": {
+    "tabFeedback": "Feedback",
+    "tabTesting": "AI Testing",
+    "tabHealth": "Health Dashboard",
+    "refreshStats": "Refresh",
+    "exportData": "Export CSV",
+    "cleanupSessions": "Mark Abandoned",
+    "cleanupSuccess": "{count} sessions marked as abandoned.",
+    "noData": "No data available yet.",
+    "recentSessions": "Recent Sessions",
+    "kpi": {
+      "totalSessions": "Total Sessions",
+      "completed": "Completed",
+      "abandoned": "Abandoned",
+      "completionRate": "Completion Rate",
+      "conversationStartRate": "Conversation Start Rate",
+      "orderCompletionRate": "Order Completion Rate",
+      "avgAiAccuracy": "Avg AI Accuracy",
+      "avgUserRating": "Avg User Rating",
+      "trustRate": "Trust Rate",
+      "humanLikeness": "Human-Likeness Score",
+      "npsScore": "NPS Score",
+      "recommendationRate": "Recommendation Rate",
+      "severityScore": "Failure Severity"
+    },
+    "charts": {
+      "funnel": "Session Funnel",
+      "funnelLanding": "Landing Viewed",
+      "funnelInstagram": "Instagram Clicked",
+      "funnelReturn": "Returned",
+      "funnelSurvey": "Survey Started",
+      "funnelComplete": "Completed",
+      "aiAccuracy": "AI Accuracy Distribution",
+      "humanVsAi": "Human vs AI Perception",
+      "trust": "Trust Distribution",
+      "failureReasons": "Failure Reasons",
+      "failureSeverity": "Failure Severity",
+      "recommendation": "Recommendation Distribution",
+      "duration": "Conversation Duration",
+      "npsGauge": "NPS Breakdown"
+    }
+  }
+}
