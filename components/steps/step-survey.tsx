@@ -331,7 +331,7 @@ export default function StepSurvey() {
       </div>
 
       {/* Question area */}
-      <div className="flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
+      <div className="flex-1 flex items-center justify-center px-4 py-5 sm:py-8">
         <div className="w-full max-w-2xl">
           <AnimatePresence mode="wait">
             {currentQuestion && (
@@ -350,7 +350,7 @@ export default function StepSurvey() {
       </div>
 
       {/* Bottom action bar */}
-      <div className="sticky bottom-0 bg-white/90 backdrop-blur-xl border-t border-gray-200/60 px-4 py-4 safe-bottom">
+      <div className="sticky bottom-0 bg-white/90 backdrop-blur-xl border-t border-gray-200/60 px-4 py-3 safe-bottom">
         <div className="max-w-2xl mx-auto">
           {isLastQuestion ? (
             <motion.button
@@ -358,14 +358,14 @@ export default function StepSurvey() {
               whileTap={{ scale: 0.98 }}
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="w-full py-4 px-6 rounded-2xl bg-[#27AE60] hover:bg-[#219a52] text-white font-bold text-base shadow-[0_4px_20px_rgba(39,174,96,0.25)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              className="w-full py-3 px-5 rounded-xl bg-[#27AE60] hover:bg-[#219a52] text-white font-bold text-sm shadow-[0_4px_20px_rgba(39,174,96,0.25)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
-                <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
                   {t('common.submit')}
-                  {isAr ? <ArrowLeft className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
+                  {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
                 </>
               )}
             </motion.button>
@@ -375,10 +375,10 @@ export default function StepSurvey() {
               whileTap={{ scale: 0.98 }}
               onClick={handleNext}
               disabled={!isCurrentAnswered}
-              className="w-full py-4 px-6 rounded-2xl bg-[#27AE60] hover:bg-[#219a52] text-white font-bold text-base shadow-[0_4px_20px_rgba(39,174,96,0.25)] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              className="w-full py-3 px-5 rounded-xl bg-[#27AE60] hover:bg-[#219a52] text-white font-bold text-sm shadow-[0_4px_20px_rgba(39,174,96,0.25)] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {t('common.next')}
-              {isAr ? <ArrowLeft className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
+              {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
             </motion.button>
           )}
         </div>
