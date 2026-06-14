@@ -19,16 +19,3 @@ services:
       - NODE_ENV=production
     networks:
       - default
-      - n8n_default
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.sellio-feedback.rule=Host(`join.sellioai.com`)"
-      - "traefik.http.services.sellio-feedback.loadbalancer.server.port=5005"
-      
-      # Uncomment the two lines below if Traefik is set up to issue automatic HTTPS certs via Let's Encrypt
-      - "traefik.http.routers.sellio-feedback.entrypoints=websecure"
-      - "traefik.http.routers.sellio-feedback.tls.certresolver=mytlschallenge"
-
-networks:
-  n8n_default:
-    external: true
