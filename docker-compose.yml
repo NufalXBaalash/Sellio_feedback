@@ -8,7 +8,9 @@ services:
     container_name: sellio-feedback
     restart: unless-stopped
     expose:
-      - "3000"
+      - "5005"
+    ports:
+      - "5005:5005"
     env_file:
       - .env.local
     volumes:
@@ -21,7 +23,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sellio-feedback.rule=Host(`join.sellioai.com`)"
-      - "traefik.http.services.sellio-feedback.loadbalancer.server.port=3000"
+      - "traefik.http.services.sellio-feedback.loadbalancer.server.port=5005"
       
       # Uncomment the two lines below if Traefik is set up to issue automatic HTTPS certs via Let's Encrypt
       - "traefik.http.routers.sellio-feedback.entrypoints=websecure"
