@@ -19,3 +19,14 @@ services:
       - NODE_ENV=production
     networks:
       - default
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sellio-feedback.rule=Host(`join.sellioai.com`)"
+      - "traefik.http.routers.sellio-feedback.entrypoints=websecure"
+      - "traefik.http.routers.sellio-feedback.tls.certresolver=myresolver"
+      - "traefik.http.services.sellio-feedback.loadbalancer.server.port=5005"
+
+networks:
+  proxy:
+    external: true
