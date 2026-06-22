@@ -31,7 +31,7 @@ async function exportFeedback() {
     if (error) throw new Error(`Supabase error: ${error.message}`)
     if (data && data.length > 0) {
       feedbackData = data.map(item => ({
-        email: item.email, isUseful: item.is_useful, feedback: item.feedback || '', timestamp: item.timestamp
+        name: item.name || '', phone: item.phone || '', email: item.email, isUseful: item.is_useful, feedback: item.feedback || '', timestamp: item.timestamp
       }))
     }
   } catch (supabaseError) {
@@ -44,8 +44,8 @@ async function exportFeedback() {
         for (let i = 1; i < lines.length; i++) {
           const line = lines[i]
           if (line.trim()) {
-            const matches = line.match(/"([^"]*)","([^"]*)","([^"]*)","([^"]*)"/)
-            if (matches) feedbackData.push({ email: matches[1], isUseful: matches[2], feedback: matches[3], timestamp: matches[4] })
+            const matches = line.match(/"([^"]*)","([^"]*)","([^"]*)","([^"]*)","([^"]*)","([^"]*)"/)
+            if (matches) feedbackData.push({ name: matches[1], phone: matches[2], email: matches[3], isUseful: matches[4], feedback: matches[5], timestamp: matches[6] })
           }
         }
       } catch (csvError) { console.error('Error reading CSV:', csvError) }
@@ -59,8 +59,9 @@ async function exportFeedback() {
     return NextResponse.json({ error: 'No feedback data found' }, { status: 404 })
   }
 
-  const headers = 'Email,IsUseful,Feedback,Timestamp\n'
-  const csvRows = feedbackData.map(d => `"${d.email.replace(/"/g, '""')}","${d.isUseful.replace(/"/g, '""')}","${d.feedback.replace(/"/g, '""')}","${d.timestamp}"`).join('\n')
+  const esc = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`
+  const headers = 'Name,Phone,Email,IsUseful,Feedback,Timestamp\n'
+  const csvRows = feedbackData.map(d => `${esc(d.name)}},${esc(d.phone)}},${esc(d.email)}},${esc(d.isUseful)}},${esc(d.feedback)}},${esc(d.timestamp)}`).join('\n')
   const bom = '﻿'
   const respHeaders = new Headers()
   respHeaders.set('Content-Type', 'text/csv; charset=utf-8')
@@ -86,13 +87,18 @@ async function exportSessions() {
   }
 
   const columns = [
-    'session_id', 'language', 'status',
+    'session_id', 'language', 'status', 'flow_type',
     'landing_viewed_at', 'instagram_clicked_at', 'test_started_at', 'test_returned_at',
     'survey_started_at', 'survey_completed_at', 'total_duration_seconds',
+    // Customer survey answers
     'conversation_started', 'ai_accuracy_rating', 'order_completed',
     'order_prevented_reason', 'order_prevented_text', 'issue_severity',
     'conversation_duration_estimate', 'overall_rating', 'human_likeness',
     'trust_level', 'business_recommendation', 'nps_score', 'open_feedback',
+    // Merchant survey answers (M2–M11)
+    'm_ai_accuracy_rating', 'm_service_useful', 'm_top_benefit', 'm_top_benefit_text',
+    'm_willing_to_pay', 'm_price_expectation', 'm_pricing_fair', 'm_adoption_timeline',
+    'm_blocker', 'm_blocker_text', 'm_merchant_nps', 'm_open_feedback',
     'created_at',
   ]
 

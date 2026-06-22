@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
-import type { Locale, TestStep, SessionState, SurveyAnswers } from '@/lib/types/session'
+import type { Locale, TestStep, SessionState, SurveyAnswers, MerchantSurveyAnswers, FlowType } from '@/lib/types/session'
 import { TranslationContext, getTranslationHook } from '@/lib/i18n'
 
 const STORAGE_KEY = 'sellio_test_session'
@@ -11,12 +11,14 @@ const initialState: SessionState = {
   step: 'landing',
   sessionId: null,
   language: 'en',
+  flowType: 'customer',
   landingViewedAt: null,
   instagramClickedAt: null,
   testStartedAt: null,
   testReturnedAt: null,
   surveyStartedAt: null,
   surveyAnswers: {},
+  merchantAnswers: {},
   currentQuestionIndex: 0,
   isSubmitting: false,
 }
@@ -25,7 +27,9 @@ interface SessionContextValue extends SessionState {
   setStep: (step: TestStep) => void
   setLanguage: (lang: Locale) => void
   setSessionId: (id: string) => void
+  setFlowType: (flow: FlowType) => void
   setSurveyAnswer: (key: keyof SurveyAnswers, value: unknown) => void
+  setMerchantAnswer: (key: keyof MerchantSurveyAnswers, value: unknown) => void
   setCurrentQuestionIndex: (index: number) => void
   setIsSubmitting: (v: boolean) => void
   resetSession: () => void
@@ -36,7 +40,9 @@ const SessionContext = createContext<SessionContextValue>({
   setStep: () => {},
   setLanguage: () => {},
   setSessionId: () => {},
+  setFlowType: () => {},
   setSurveyAnswer: () => {},
+  setMerchantAnswer: () => {},
   setCurrentQuestionIndex: () => {},
   setIsSubmitting: () => {},
   resetSession: () => {},
@@ -57,7 +63,10 @@ export function TestSessionProvider({ children }: { children: ReactNode }) {
         return {
           ...initialState,
           ...parsed,
+          surveyAnswers: { ...parsed.surveyAnswers },
+          merchantAnswers: { ...(parsed.merchantAnswers || {}) },
           language: savedLang || parsed.language || 'en',
+          flowType: parsed.flowType === 'merchant' ? 'merchant' : 'customer',
           isSubmitting: false,
         }
       }
@@ -95,10 +104,21 @@ export function TestSessionProvider({ children }: { children: ReactNode }) {
     setState(prev => ({ ...prev, sessionId }))
   }, [])
 
+  const setFlowType = useCallback((flowType: FlowType) => {
+    setState(prev => ({ ...prev, flowType }))
+  }, [])
+
   const setSurveyAnswer = useCallback((key: keyof SurveyAnswers, value: unknown) => {
     setState(prev => ({
       ...prev,
       surveyAnswers: { ...prev.surveyAnswers, [key]: value },
+    }))
+  }, [])
+
+  const setMerchantAnswer = useCallback((key: keyof MerchantSurveyAnswers, value: unknown) => {
+    setState(prev => ({
+      ...prev,
+      merchantAnswers: { ...prev.merchantAnswers, [key]: value },
     }))
   }, [])
 
@@ -129,7 +149,9 @@ export function TestSessionProvider({ children }: { children: ReactNode }) {
         setStep,
         setLanguage,
         setSessionId,
+        setFlowType,
         setSurveyAnswer,
+        setMerchantAnswer,
         setCurrentQuestionIndex,
         setIsSubmitting,
         resetSession,

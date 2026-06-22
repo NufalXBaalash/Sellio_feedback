@@ -1,6 +1,8 @@
 import { google } from 'googleapis';
 
 interface FeedbackData {
+  name?: string;
+  phone?: string;
   email: string;
   isUseful: string;
   feedback: string;
@@ -68,6 +70,8 @@ class GoogleSheetsService {
       // Prepare the row data
       const values = [
         [
+          data.name || '',
+          data.phone || '',
           data.email,
           data.isUseful,
           data.feedback,
@@ -97,18 +101,18 @@ class GoogleSheetsService {
       // Check if the first row has headers
       const response = await this.sheets.spreadsheets.values.get({
         spreadsheetId: this.spreadsheetId,
-        range: 'A1:D1',
+        range: 'A1:F1',
       });
 
       const existingHeaders = response.data.values?.[0];
-      
+
       // If no headers exist or they don't match our expected headers
       if (!existingHeaders || existingHeaders.length === 0) {
-        const headers = ['Email', 'IsUseful', 'Feedback', 'Timestamp'];
-        
+        const headers = ['Name', 'Phone', 'Email', 'IsUseful', 'Feedback', 'Timestamp'];
+
         await this.sheets.spreadsheets.values.update({
           spreadsheetId: this.spreadsheetId,
-          range: 'A1:D1',
+          range: 'A1:F1',
           valueInputOption: 'USER_ENTERED',
           requestBody: {
             values: [headers],
@@ -131,13 +135,15 @@ class GoogleSheetsService {
       });
 
       const rows = response.data.values || [];
-      
+
       // Skip header row and convert to FeedbackData objects
       const feedbackData: FeedbackData[] = rows.slice(1).map((row: any[]) => ({
-        email: row[0] || '',
-        isUseful: row[1] || '',
-        feedback: row[2] || '',
-        timestamp: row[3] || '',
+        name: row[0] || '',
+        phone: row[1] || '',
+        email: row[2] || '',
+        isUseful: row[3] || '',
+        feedback: row[4] || '',
+        timestamp: row[5] || '',
       }));
 
       return feedbackData;

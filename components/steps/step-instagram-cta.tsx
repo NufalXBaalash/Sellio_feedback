@@ -13,7 +13,7 @@ const INSTAGRAM_URL = process.env.NEXT_PUBLIC_INSTAGRAM_STORE_URL || 'https://in
 
 export default function StepInstagramCta() {
   const { t, isRTL } = useTranslation()
-  const { language, sessionId, setSessionId, setStep, resetSession, landingViewedAt } = useTestSession()
+  const { language, sessionId, setSessionId, setStep, resetSession, landingViewedAt, flowType } = useTestSession()
   const isAr = language === 'ar'
   const [hasClicked, setHasClicked] = useState(false)
 
@@ -27,7 +27,7 @@ export default function StepInstagramCta() {
       await fetch('/api/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId: sid, language, userAgent: navigator.userAgent, landingViewedAt: landingViewedAt || now, instagramClickedAt: now }),
+        body: JSON.stringify({ sessionId: sid, language, flowType, userAgent: navigator.userAgent, landingViewedAt: landingViewedAt || now, instagramClickedAt: now }),
       })
     } catch (e) { console.error('Failed to create session:', e) }
     window.open(INSTAGRAM_URL, '_blank')

@@ -20,8 +20,19 @@
       "step1": "Visit our Instagram store",
       "step2": "Chat with the AI like a real customer",
       "step3": "Answer a short survey about your experience",
-      "discountBadge": "🎁 Get 50% Off",
-      "discountText": "After you finish, you'll receive a 50% discount code for yourself or anyone you choose. Just enter your email at the end of the feedback."
+      "discountBadge": "🎁 Get 100% Off",
+      "discountText": "After you finish, enter your name, phone, and email to unlock SellioAI 100% FREE — a full free access code, for yourself or anyone you choose.",
+      "flowSelector": {
+        "heading": "Who are you?",
+        "customerTitle": "I'm a Customer",
+        "customerSubtitle": "Test the AI as a real shopper",
+        "customerBadge": "~5–10 min",
+        "merchantTitle": "I'm a Merchant",
+        "merchantSubtitle": "Evaluate this for my business",
+        "merchantBadge": "Business survey · ~10 min",
+        "priorityTag": "Priority",
+        "merchantCta": "Start Merchant Survey"
+      }
     },
     "instagramCta": {
       "title": "Visit Our Instagram Store",
@@ -51,7 +62,10 @@
       "subtitle": "Your feedback is invaluable",
       "description": "You've just helped us improve our AI sales agent. Your honest feedback will shape the future of AI-powered commerce.",
       "detail": "Your responses have been recorded and will be analyzed to improve the AI's performance, accuracy, and customer experience.",
-      "share": "Want to help more? Share this testing link with others!"
+      "share": "Want to help more? Share this testing link with others!",
+      "merchantTitle": "Thank You, Merchant! 🎉",
+      "merchantDescription": "Your business insight is exactly what we need. You've helped us understand what real store owners expect from an AI sales agent.",
+      "merchantDetail": "Your responses have been recorded and will directly shape our pricing, features, and roadmap."
     }
   },
   "survey": {
@@ -138,6 +152,89 @@
       "question": "Tell us about your experience in detail",
       "placeholder": "What worked well? What felt confusing? What felt broken? What impressed you? What should we improve?",
       "hint": "Your honest feedback helps us build better AI."
+    },
+    "merchant": {
+      "m1_conversationStarted": {
+        "question": "Were you able to start a conversation with the AI sales agent?",
+        "yes": "Yes, I started a conversation",
+        "no": "No, I couldn't start one"
+      },
+      "m2_aiQuality": {
+        "question": "How well did the AI handle product questions, pricing, and customer interactions?",
+        "label1": "Very Poor",
+        "label2": "Poor",
+        "label3": "Average",
+        "label4": "Good",
+        "label5": "Excellent"
+      },
+      "m3_serviceUseful": {
+        "question": "Do you see this AI service as genuinely useful for your business?",
+        "definitely": "Absolutely, it solves a real problem",
+        "probably": "Probably yes",
+        "notSure": "I'm not sure yet",
+        "probablyNot": "Probably not",
+        "definitelyNot": "Not useful for my business"
+      },
+      "m4_topBenefit": {
+        "question": "What's the most valuable thing this service offers your business?",
+        "selectPlaceholder": "Select the top benefit...",
+        "autoReplies": "Automatic 24/7 customer replies",
+        "dmToSales": "Converting DMs & comments into orders",
+        "timeSaving": "Saving manual response time",
+        "noLostLeads": "Not losing potential customers",
+        "inventoryMgmt": "Managing stock and product info",
+        "other": "Something else",
+        "textPlaceholder": "Tell us what..."
+      },
+      "m5_willingToPay": {
+        "question": "If this service worked reliably, would you be willing to pay a monthly subscription for it?",
+        "yes": "Yes, I'd pay for it",
+        "maybe": "Maybe, depends on the price",
+        "no": "No, I wouldn't pay for it"
+      },
+      "m6_priceExpectation": {
+        "question": "What monthly price range would feel fair to you for this service?",
+        "under100": "Less than 100 EGP",
+        "100to300": "100 – 300 EGP",
+        "300to600": "300 – 600 EGP",
+        "600to1000": "600 – 1,000 EGP",
+        "over1000": "More than 1,000 EGP"
+      },
+      "m7_pricingFair": {
+        "question": "After seeing our pricing plans, how do you feel about them?",
+        "tooCheap": "Too cheap — makes me question the quality",
+        "fair": "Fair and reasonable",
+        "expensiveButOk": "A bit expensive but I'd consider it",
+        "tooExpensive": "Too expensive for my budget"
+      },
+      "m8_adoptionTimeline": {
+        "question": "If you decided to subscribe, when would you realistically start?",
+        "now": "Ready to start now",
+        "withinMonth": "Within the next month",
+        "within3months": "Within 3 months",
+        "needMoreProof": "I need to see more results first"
+      },
+      "m9_blocker": {
+        "question": "What's the main thing that might stop you from subscribing?",
+        "selectPlaceholder": "Select the main blocker...",
+        "price": "Price is too high",
+        "trustAi": "I don't fully trust AI yet",
+        "needTrial": "Need a longer trial period",
+        "incomplete": "The service feels incomplete",
+        "notNeeded": "My business doesn't need it",
+        "other": "Something else",
+        "textPlaceholder": "Add any details (optional)..."
+      },
+      "m10_nps": {
+        "question": "How likely are you to recommend SellioAI to another merchant or business owner?",
+        "label0": "Not at all likely",
+        "label10": "Extremely likely"
+      },
+      "m11_openFeedback": {
+        "question": "Any additional feedback, suggestions, or features you'd like to see?",
+        "placeholder": "What would make this service a no-brainer for you? What's missing?",
+        "hint": "Optional — your ideas shape our roadmap."
+      }
     }
   },
   "admin": {

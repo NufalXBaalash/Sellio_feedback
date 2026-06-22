@@ -7,10 +7,11 @@ import StepLanding from '@/components/steps/step-landing'
 import StepInstagramCta from '@/components/steps/step-instagram-cta'
 import StepInstructions from '@/components/steps/step-instructions'
 import StepSurvey from '@/components/steps/step-survey'
+import StepSurveyMerchant from '@/components/steps/step-survey-merchant'
 import StepThankYou from '@/components/steps/step-thank-you'
 
 export default function TestFlow() {
-  const { step, sessionId, setStep, landingViewedAt, instagramClickedAt } = useTestSession()
+  const { step, sessionId, setStep, landingViewedAt, instagramClickedAt, flowType } = useTestSession()
 
   // Record landing_viewed_at on first render
   useEffect(() => {
@@ -35,7 +36,11 @@ export default function TestFlow() {
       {step === 'landing' && <StepLanding key="landing" />}
       {step === 'instagram-cta' && <StepInstagramCta key="instagram-cta" />}
       {step === 'instructions' && <StepInstructions key="instructions" />}
-      {step === 'survey' && <StepSurvey key="survey" />}
+      {step === 'survey' && (
+        flowType === 'merchant'
+          ? <StepSurveyMerchant key="survey-merchant" />
+          : <StepSurvey key="survey" />
+      )}
       {step === 'thank-you' && <StepThankYou key="thank-you" />}
     </AnimatePresence>
   )

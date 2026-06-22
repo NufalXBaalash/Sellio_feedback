@@ -37,6 +37,7 @@ export async function PATCH(
 
     // Full survey submission
     const {
+      // Customer answers
       conversation_started,
       ai_accuracy_rating,
       order_completed,
@@ -50,6 +51,19 @@ export async function PATCH(
       business_recommendation,
       nps_score,
       open_feedback,
+      // Merchant answers (M2–M11; M1 is client-only and intentionally dropped)
+      m_ai_accuracy_rating,
+      m_service_useful,
+      m_top_benefit,
+      m_top_benefit_text,
+      m_willing_to_pay,
+      m_price_expectation,
+      m_pricing_fair,
+      m_adoption_timeline,
+      m_blocker,
+      m_blocker_text,
+      m_merchant_nps,
+      m_open_feedback,
       testReturnedAt,
       surveyStartedAt,
     } = body
@@ -77,6 +91,7 @@ export async function PATCH(
       test_returned_at: testReturnedAt || null,
       survey_started_at: surveyStartedAt || null,
       total_duration_seconds: totalDurationSeconds,
+      // Customer
       conversation_started: conversation_started ?? null,
       ai_accuracy_rating: ai_accuracy_rating ?? null,
       order_completed: order_completed ?? null,
@@ -90,6 +105,19 @@ export async function PATCH(
       business_recommendation: business_recommendation || null,
       nps_score: nps_score ?? null,
       open_feedback: open_feedback || null,
+      // Merchant (M2–M11)
+      m_ai_accuracy_rating: m_ai_accuracy_rating ?? null,
+      m_service_useful: m_service_useful || null,
+      m_top_benefit: m_top_benefit || null,
+      m_top_benefit_text: m_top_benefit_text || null,
+      m_willing_to_pay: m_willing_to_pay || null,
+      m_price_expectation: m_price_expectation || null,
+      m_pricing_fair: m_pricing_fair || null,
+      m_adoption_timeline: m_adoption_timeline || null,
+      m_blocker: m_blocker || null,
+      m_blocker_text: m_blocker_text || null,
+      m_merchant_nps: m_merchant_nps ?? null,
+      m_open_feedback: m_open_feedback || null,
     }
 
     const { data, error } = await supabase

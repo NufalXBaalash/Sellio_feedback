@@ -2,18 +2,24 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, ArrowLeft, Clock, Store, MessageCircle, ClipboardList, Gift } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Clock, Store, ShoppingBag, MessageCircle, ClipboardList, Gift } from 'lucide-react'
 import { useTranslation } from '@/lib/i18n'
 import { useTestSession } from '@/components/test-session-provider'
 import AnimatedHeroBackground from '@/components/shared/animated-background'
 import LanguageSwitcher from '@/components/shared/language-switcher'
+import type { FlowType } from '@/lib/types/session'
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
 export default function StepLanding() {
   const { t, isRTL } = useTranslation()
-  const { language, setStep } = useTestSession()
+  const { language, setStep, setFlowType } = useTestSession()
   const isAr = language === 'ar'
+
+  const chooseFlow = (flow: FlowType) => {
+    setFlowType(flow)
+    setStep('instagram-cta')
+  }
 
   return (
     <div
@@ -32,7 +38,7 @@ export default function StepLanding() {
       </header>
 
       {/* Hero */}
-      <section className="relative pt-20 sm:pt-28 md:pt-36 pb-8 sm:pb-14 px-4 sm:px-6 min-h-screen flex flex-col items-center justify-center text-center z-10 overflow-hidden">
+      <section className="relative pt-16 sm:pt-24 md:pt-32 pb-10 sm:pb-14 px-4 sm:px-6 min-h-screen flex flex-col items-center justify-start sm:justify-center text-center z-10 overflow-hidden">
         <AnimatedHeroBackground />
         <div className="max-w-3xl mx-auto relative z-10">
           <motion.div
@@ -89,7 +95,7 @@ export default function StepLanding() {
             </div>
           </motion.div>
 
-          {/* 50% discount offer banner */}
+          {/* 100% free offer banner */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -107,24 +113,73 @@ export default function StepLanding() {
             </div>
           </motion.div>
 
+          {/* Role selector */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4, ease: EASE }}
-            className="flex flex-col items-center gap-2"
+            className="flex flex-col items-center gap-4"
           >
-            <button
-              onClick={() => setStep('instagram-cta')}
-              className="group w-full max-w-xs h-12 sm:h-13 px-7 rounded-full bg-[#27AE60] text-white font-bold text-base sm:text-lg hover:bg-[#219a52] transition-colors flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(39,174,96,0.3)] hover:shadow-[0_4px_30px_rgba(39,174,96,0.45)] hover:-translate-y-0.5 duration-300"
-            >
-              {t('steps.landing.cta')}
-              {isAr ? (
-                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              ) : (
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              )}
-            </button>
-            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-gray-400">
+            <p className="text-sm font-semibold text-gray-700">{t('steps.landing.flowSelector.heading')}</p>
+
+            <div className="w-full max-w-md grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4">
+              {/* Customer card — compact horizontal */}
+              <motion.button
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => chooseFlow('customer')}
+                className="group relative w-full text-start p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 hover:border-[#27AE60]/40 shadow-sm hover:shadow-md transition-all flex items-center gap-3"
+              >
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#27AE60]/10 flex items-center justify-center shrink-0">
+                  <ShoppingBag className="w-5 h-5 text-[#27AE60]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-tight">{t('steps.landing.flowSelector.customerTitle')}</h3>
+                  <p className="text-[11px] sm:text-xs text-gray-500 leading-snug mt-0.5">{t('steps.landing.flowSelector.customerSubtitle')}</p>
+                  <span className="inline-flex items-center gap-1 text-[10px] text-gray-400 mt-1">
+                    <Clock className="w-2.5 h-2.5" />
+                    {t('steps.landing.flowSelector.customerBadge')}
+                  </span>
+                </div>
+                <div className="shrink-0 w-8 h-8 rounded-full bg-[#27AE60]/10 group-hover:bg-[#27AE60] flex items-center justify-center transition-colors">
+                  {isAr
+                    ? <ArrowLeft className="w-4 h-4 text-[#27AE60] group-hover:text-white transition-colors" />
+                    : <ArrowRight className="w-4 h-4 text-[#27AE60] group-hover:text-white transition-colors" />}
+                </div>
+              </motion.button>
+
+              {/* Merchant card — highlighted, compact horizontal */}
+              <motion.button
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => chooseFlow('merchant')}
+                className="group relative w-full text-start p-3.5 sm:p-4 rounded-2xl bg-[#f0faf4] border-2 border-[#27AE60] shadow-[0_8px_30px_rgba(39,174,96,0.12)] hover:shadow-[0_8px_40px_rgba(39,174,96,0.22)] transition-all flex items-center gap-3"
+              >
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#27AE60] flex items-center justify-center shrink-0">
+                  <Store className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-tight flex items-center gap-1.5 flex-wrap">
+                    {t('steps.landing.flowSelector.merchantTitle')}
+                    <span className="text-[8px] sm:text-[9px] font-bold text-white bg-[#27AE60] rounded px-1.5 py-0.5 uppercase tracking-wide whitespace-nowrap">
+                      {t('steps.landing.flowSelector.priorityTag')}
+                    </span>
+                  </h3>
+                  <p className="text-[11px] sm:text-xs text-gray-500 leading-snug mt-0.5">{t('steps.landing.flowSelector.merchantSubtitle')}</p>
+                  <span className="inline-flex items-center gap-1 text-[10px] text-gray-400 mt-1">
+                    <Clock className="w-2.5 h-2.5" />
+                    {t('steps.landing.flowSelector.merchantBadge')}
+                  </span>
+                </div>
+                <div className="shrink-0 w-8 h-8 rounded-full bg-[#27AE60] flex items-center justify-center">
+                  {isAr
+                    ? <ArrowLeft className="w-4 h-4 text-white" />
+                    : <ArrowRight className="w-4 h-4 text-white" />}
+                </div>
+              </motion.button>
+            </div>
+
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-gray-400 mt-1">
               <Clock className="w-3 h-3" />
               {t('steps.landing.timeEstimate')}
             </div>

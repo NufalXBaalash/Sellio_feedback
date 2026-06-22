@@ -8,12 +8,12 @@ import { sendWaitlistEmail, sendTesterThankYouEmail } from '../../../lib/mailer'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email, isUseful, feedback } = body
+    const { name, phone, email, isUseful, feedback } = body
 
-    // Validate required fields
-    if (!email || !isUseful) {
+    // Validate required fields: name, phone, email + opinion
+    if (!name || !phone || !email || !isUseful) {
       return NextResponse.json(
-        { error: 'البريد الإلكتروني والرأي مطلوبان' },
+        { error: 'الاسم ورقم الهاتف والبريد الإلكتروني والرأي مطلوبة' },
         { status: 400 }
       )
     }
@@ -21,6 +21,8 @@ export async function POST(request: NextRequest) {
     // Prepare data for Supabase
     const timestamp = new Date().toISOString()
     const feedbackData: FeedbackData = {
+      name: (name as string).trim(),
+      phone: (phone as string).trim(),
       email: email.trim(),
       is_useful: isUseful as 'yes' | 'no',
       feedback: feedback?.trim() || '',
@@ -63,16 +65,18 @@ export async function POST(request: NextRequest) {
       const fileExists = fs.existsSync(csvPath)
       
       if (!fileExists) {
-        const headers = 'Email,IsUseful,Feedback,Timestamp\n'
+        const headers = 'Name,Phone,Email,IsUseful,Feedback,Timestamp\n'
         fs.writeFileSync(csvPath, headers)
       }
 
       // Clean and escape data for CSV
+      const cleanName = (name || '').replace(/"/g, '""')
+      const cleanPhone = (phone || '').replace(/"/g, '""')
       const cleanEmail = email.replace(/"/g, '""')
       const cleanIsUseful = isUseful.replace(/"/g, '""')
       const cleanFeedback = (feedback || '').replace(/"/g, '""').replace(/\n/g, ' ').replace(/\r/g, ' ')
-      
-      const csvRow = `"${cleanEmail}","${cleanIsUseful}","${cleanFeedback}","${timestamp}"\n`
+
+      const csvRow = `"${cleanName}","${cleanPhone}","${cleanEmail}","${cleanIsUseful}","${cleanFeedback}","${timestamp}"\n`
       fs.appendFileSync(csvPath, csvRow, 'utf8')
       
       console.log('Data backed up to CSV successfully')
@@ -85,6 +89,8 @@ export async function POST(request: NextRequest) {
     try {
       const sheetsService = new GoogleSheetsService()
       await sheetsService.appendFeedback({
+        name: (name || '').trim(),
+        phone: (phone || '').trim(),
         email: email.trim(),
         isUseful: isUseful,
         feedback: feedback?.trim() || '',
@@ -96,9 +102,9 @@ export async function POST(request: NextRequest) {
       // Don't fail the request if Google Sheets sync fails
     }
 
-    // Send the Thank You Email with discount code
+    // Send the Thank You Email with free access code
     try {
-      await sendTesterThankYouEmail(email.trim());
+      await sendTesterThankYouEmail(email.trim(), (name || '').trim());
       console.log('Tester thank-you email sent to:', email);
     } catch (emailError) {
       console.error('Error sending thank-you email:', emailError);

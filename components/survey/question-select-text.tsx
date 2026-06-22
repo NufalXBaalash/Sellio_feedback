@@ -13,12 +13,15 @@ interface QuestionSelectTextProps {
   textValue: string | null | undefined
   onSelectChange: (value: string) => void
   onTextChange: (value: string) => void
+  // Show the free-text field only for this option value (default: "Other").
   showTextFor?: string
+  // Show the free-text field for ANY selected value (overrides showTextFor).
+  alwaysShowText?: boolean
 }
 
 export default function QuestionSelectText({
   question, selectPlaceholder, options, textPlaceholder,
-  selectedValue, textValue, onSelectChange, onTextChange, showTextFor = 'optionOther',
+  selectedValue, textValue, onSelectChange, onTextChange, showTextFor = 'optionOther', alwaysShowText = false,
 }: QuestionSelectTextProps) {
   return (
     <div className="space-y-3">
@@ -32,7 +35,7 @@ export default function QuestionSelectText({
           <option value="" disabled>{selectPlaceholder}</option>
           {options.map((opt) => <option key={opt.key} value={opt.key}>{opt.label}</option>)}
         </select>
-        {selectedValue === showTextFor && (
+        {(alwaysShowText ? !!selectedValue : selectedValue === showTextFor) && (
           <motion.textarea
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}

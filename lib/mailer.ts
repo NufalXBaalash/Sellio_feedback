@@ -59,18 +59,18 @@ export async function sendWaitlistEmail(email: string) {
       </p>
       <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
         We are working hard to build the ultimate WhatsApp and Instagram automation tool for your social commerce business.
-        As promised, because you are an early supporter, you have secured a <strong>50% off discount</strong> on your first plan!
+        As promised, because you are an early supporter, you have secured <strong>100% off (free)</strong> on your first plan!
       </p>
       <div style="background-color: #f9fafb; padding: 25px; border-radius: 12px; text-align: center; margin: 35px 0; border: 1px dashed #d1d5db;">
         <span style="font-size: 14px; color: #6b7280; display: block; margin-bottom: 10px;">
-          Your Exclusive Discount Code
+          Your Exclusive Free Access Code
         </span>
         <span style="font-size: 32px; font-weight: 800; color: #27AE60; letter-spacing: 3px; font-family: monospace;">
           ${code}
         </span>
         <br/><br/>
         <span style="font-size: 15px; color: #6b7280;">
-          Use this code at checkout for 50% off your first plan.
+          Use this code at checkout for 100% off (free) your first plan.
         </span>
       </div>
       <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
@@ -88,7 +88,7 @@ export async function sendWaitlistEmail(email: string) {
 
   await sendMail({
     to: email,
-    subject: "You're on the SellioAI Waitlist! (50% Off Secured)",
+    subject: "You're on the SellioAI Waitlist! (100% Off Secured)",
     html,
     attachments: [
       {
@@ -100,8 +100,9 @@ export async function sendWaitlistEmail(email: string) {
   });
 }
 
-export async function sendTesterThankYouEmail(email: string) {
+export async function sendTesterThankYouEmail(email: string, name?: string) {
   const code = generateDiscountCode();
+  const greeting = name ? `<p style="color: #4b5563; font-size: 16px; line-height: 1.5;">Hi ${name.replace(/</g, '&lt;')},</p>` : '';
 
   const html = `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #eaeaea; border-radius: 12px; background-color: #ffffff;">
@@ -109,23 +110,24 @@ export async function sendTesterThankYouEmail(email: string) {
         <img src="cid:sellio-logo" alt="SellioAI Logo" style="max-height: 50px; width: auto;" />
       </div>
       <h2 style="color: #111827; text-align: center; font-size: 24px; font-weight: 700;">Thank You for Testing SellioAI! 🎉</h2>
+      ${greeting}
       <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
         Your feedback is incredibly valuable and will directly help us improve our AI sales agent.
         Thank you for taking the time to test it and share your honest experience.
       </p>
       <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
-        As a thank you for being an early tester, here is your <strong>exclusive 50% discount code</strong> for SellioAI:
+        As a thank you for being an early tester, here is your <strong>100% free access code</strong> for SellioAI:
       </p>
       <div style="background-color: #f9fafb; padding: 25px; border-radius: 12px; text-align: center; margin: 35px 0; border: 1px dashed #d1d5db;">
         <span style="font-size: 14px; color: #6b7280; display: block; margin-bottom: 10px;">
-          Your Exclusive Discount Code
+          Your Exclusive Free Access Code
         </span>
         <span style="font-size: 32px; font-weight: 800; color: #27AE60; letter-spacing: 3px; font-family: monospace;">
           ${code}
         </span>
         <br/><br/>
         <span style="font-size: 15px; color: #6b7280;">
-          Use this code at checkout for 50% off your first plan.
+          Use this code at checkout for 100% off (free) your first plan.
         </span>
       </div>
       <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
@@ -143,7 +145,7 @@ export async function sendTesterThankYouEmail(email: string) {
 
   await sendMail({
     to: email,
-    subject: "Thank You for Testing SellioAI! (Your 50% Discount Inside)",
+    subject: "Thank You for Testing SellioAI! (Your 100% Free Access Inside)",
     html,
     attachments: [
       {

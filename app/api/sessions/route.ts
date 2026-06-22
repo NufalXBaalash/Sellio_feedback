@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { sessionId, language, userAgent, landingViewedAt, instagramClickedAt } = body
+    const { sessionId, language, flowType, userAgent, landingViewedAt, instagramClickedAt } = body
 
     if (!sessionId) {
       return NextResponse.json({ error: 'Session ID is required' }, { status: 400 })
@@ -15,17 +15,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Database not configured' }, { status: 500 })
     }
 
+    // Persist the chosen flow if it has been migrated onto the table.
+    // flow_type defaults to 'customer' in the DB, so we only send it when known.
+    const insertRow: Record<string, unknown> = {
+      session_id: sessionId,
+      language: language || 'en',
+      status: 'testing',
+      landing_viewed_at: landingViewedAt || null,
+      instagram_clicked_at: instagramClickedAt || new Date().toISOString(),
+      test_started_at: new Date().toISOString(),
+      user_agent: userAgent || null,
+    }
+    if (flowType === 'merchant' || flowType === 'customer') {
+      insertRow.flow_type = flowType
+    }
+
     const { data, error } = await supabase
       .from('test_sessions')
-      .insert([{
-        session_id: sessionId,
-        language: language || 'en',
-        status: 'testing',
-        landing_viewed_at: landingViewedAt || null,
-        instagram_clicked_at: instagramClickedAt || new Date().toISOString(),
-        test_started_at: new Date().toISOString(),
-        user_agent: userAgent || null,
-      }])
+      .insert([insertRow])
       .select()
       .single()
 

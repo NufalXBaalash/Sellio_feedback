@@ -7,7 +7,7 @@ const cairo = Cairo({ subsets: ['arabic'], variable: '--font-cairo' })
 
 export const metadata: Metadata = {
   title: 'SellioAI - Your Opinion Matters',
-  description: 'Share your feedback about SellioAI and get an exclusive launch discount',
+  description: 'Test the SellioAI sales agent and get 100% free access for sharing your feedback',
 }
 
 export default function RootLayout({
