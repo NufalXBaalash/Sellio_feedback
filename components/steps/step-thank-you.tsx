@@ -16,7 +16,7 @@ export default function StepThankYou() {
   const isMerchant = flowType === 'merchant'
   const [form, setForm] = useState({ name: '', phone: '', email: '' })
   const [claimStatus, setClaimStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
-  const formValid = form.name.trim().length > 0 && form.phone.trim().length > 0 && form.email.includes('@')
+  const formValid = form.name.trim().length > 0 && form.email.includes('@')
 
   const handleShare = async () => {
     const url = window.location.origin

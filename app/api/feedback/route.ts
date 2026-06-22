@@ -10,10 +10,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { name, phone, email, isUseful, feedback } = body
 
-    // Validate required fields: name, phone, email + opinion
-    if (!name || !phone || !email || !isUseful) {
+    // Validate required fields: name, email + opinion (phone is optional)
+    if (!name || !email || !isUseful) {
       return NextResponse.json(
-        { error: 'الاسم ورقم الهاتف والبريد الإلكتروني والرأي مطلوبة' },
+        { error: 'الاسم والبريد الإلكتروني والرأي مطلوبة' },
         { status: 400 }
       )
     }
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const timestamp = new Date().toISOString()
     const feedbackData: FeedbackData = {
       name: (name as string).trim(),
-      phone: (phone as string).trim(),
+      phone: (phone as string)?.trim() || '',
       email: email.trim(),
       is_useful: isUseful as 'yes' | 'no',
       feedback: feedback?.trim() || '',
