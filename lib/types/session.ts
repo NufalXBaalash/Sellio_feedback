@@ -14,7 +14,7 @@ export type FlowType = 'customer' | 'merchant'
 export type MerchantServiceUseful = 'definitely' | 'probably' | 'not_sure' | 'probably_not' | 'definitely_not'
 export type MerchantTopBenefit = 'auto_replies' | 'dm_to_sales' | 'time_saving' | 'no_lost_leads' | 'inventory_mgmt' | 'other'
 export type MerchantWillingToPay = 'yes' | 'maybe' | 'no'
-export type MerchantPriceExpectation = 'under_100' | '100_300' | '300_600' | '600_1000' | 'over_1000'
+export type MerchantPriceExpectation = 'under_2000' | '2000_3000' | '3000_4000' | '4000_5000' | 'over_5000'
 export type MerchantPricingFair = 'too_cheap' | 'fair' | 'expensive_but_ok' | 'too_expensive'
 export type MerchantAdoptionTimeline = 'now' | 'within_month' | 'within_3months' | 'need_more_proof'
 export type MerchantBlocker = 'price' | 'trust_ai' | 'need_trial' | 'incomplete' | 'not_needed' | 'other'
@@ -68,6 +68,12 @@ export interface TestSession {
   user_agent?: string | null
   created_at?: string
   updated_at?: string
+
+  // Contact details joined from the feedback (reward-claim) table by session_id.
+  // Populated only on the stats payload — not a column on test_sessions itself.
+  contact_name?: string | null
+  contact_phone?: string | null
+  contact_email?: string | null
 }
 
 // Customer survey answers (Flow A) — unchanged

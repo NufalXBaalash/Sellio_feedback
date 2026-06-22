@@ -11,7 +11,7 @@ const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
 export default function StepThankYou() {
   const { t, isRTL } = useTranslation()
-  const { language, flowType, surveyAnswers, merchantAnswers, resetSession, setStep } = useTestSession()
+  const { language, flowType, surveyAnswers, merchantAnswers, resetSession, setStep, sessionId } = useTestSession()
   const isAr = language === 'ar'
   const isMerchant = flowType === 'merchant'
   const [form, setForm] = useState({ name: '', phone: '', email: '' })
@@ -41,6 +41,7 @@ export default function StepThankYou() {
           email: form.email.trim(),
           isUseful,
           feedback,
+          sessionId,
         }),
       })
       setClaimStatus(res.ok ? 'sent' : 'error')

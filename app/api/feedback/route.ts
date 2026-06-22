@@ -8,7 +8,7 @@ import { sendWaitlistEmail, sendTesterThankYouEmail } from '../../../lib/mailer'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, phone, email, isUseful, feedback } = body
+    const { name, phone, email, isUseful, feedback, sessionId } = body
 
     // Validate required fields: name, email + opinion (phone is optional)
     if (!name || !email || !isUseful) {
@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
     // Prepare data for Supabase
     const timestamp = new Date().toISOString()
     const feedbackData: FeedbackData = {
+      session_id: (sessionId as string)?.trim() || undefined,
       name: (name as string).trim(),
       phone: (phone as string)?.trim() || '',
       email: email.trim(),
@@ -65,7 +66,7 @@ export async function POST(request: NextRequest) {
       const fileExists = fs.existsSync(csvPath)
       
       if (!fileExists) {
-        const headers = 'Name,Phone,Email,IsUseful,Feedback,Timestamp\n'
+        const headers = 'Name,Phone,Email,IsUseful,Feedback,Timestamp,SessionId\n'
         fs.writeFileSync(csvPath, headers)
       }
 
@@ -75,8 +76,9 @@ export async function POST(request: NextRequest) {
       const cleanEmail = email.replace(/"/g, '""')
       const cleanIsUseful = isUseful.replace(/"/g, '""')
       const cleanFeedback = (feedback || '').replace(/"/g, '""').replace(/\n/g, ' ').replace(/\r/g, ' ')
+      const cleanSessionId = (sessionId || '').replace(/"/g, '""')
 
-      const csvRow = `"${cleanName}","${cleanPhone}","${cleanEmail}","${cleanIsUseful}","${cleanFeedback}","${timestamp}"\n`
+      const csvRow = `"${cleanName}","${cleanPhone}","${cleanEmail}","${cleanIsUseful}","${cleanFeedback}","${timestamp}","${cleanSessionId}"\n`
       fs.appendFileSync(csvPath, csvRow, 'utf8')
       
       console.log('Data backed up to CSV successfully')
@@ -94,7 +96,8 @@ export async function POST(request: NextRequest) {
         email: email.trim(),
         isUseful: isUseful,
         feedback: feedback?.trim() || '',
-        timestamp: timestamp
+        timestamp: timestamp,
+        sessionId: (sessionId || '').trim()
       })
       console.log('Data synced to Google Sheets successfully')
     } catch (sheetsError) {

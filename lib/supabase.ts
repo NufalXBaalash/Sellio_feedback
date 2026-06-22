@@ -11,6 +11,7 @@ export const supabase = supabaseUrl && supabaseAnonKey
 // Types for our feedback data
 export interface FeedbackData {
   id?: string
+  session_id?: string
   name?: string
   phone?: string
   email: string

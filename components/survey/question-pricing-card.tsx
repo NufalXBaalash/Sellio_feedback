@@ -2,14 +2,12 @@
 
 import { Check } from 'lucide-react'
 
-// NOTE: These plan tiers are placeholders. The real figures live on
-// sellioai.com/pricing (JS-rendered). Replace PRICING_PLANS below with the
-// actual plan names, prices, and features when they are confirmed.
+// SellioAI live plans (from sellioai.com/pricing). Update here if pricing changes.
 export interface PricingPlan {
   key: string
   name: string
   nameAr: string
-  price: string      // already-localized price string, e.g. "499 EGP"
+  price: string      // already-localized price string, e.g. "1,999"
   period: string
   periodAr: string
   highlighted?: boolean
@@ -22,32 +20,68 @@ export const PRICING_PLANS: PricingPlan[] = [
     key: 'starter',
     name: 'Starter',
     nameAr: 'ستارتر',
-    price: '199',
+    price: '1,999',
     period: '/mo',
     periodAr: '/شهر',
-    features: ['1 AI agent', 'Instagram & WhatsApp', 'Basic analytics'],
-    featuresAr: ['وكيل ذكي واحد', 'إنستغرام وواتساب', 'تحليلات أساسية'],
+    features: [
+      '1 store · 2 team members',
+      '16,000 AI credits / mo',
+      '100 orders / mo',
+      'WhatsApp',
+      'Basic AI replies',
+    ],
+    featuresAr: [
+      'متجر واحد · ٢ عضو فريق',
+      '١٦٬٠٠٠ رصيد AI / شهر',
+      '١٠٠ طلب / شهر',
+      'واتساب',
+      'ردود AI أساسية',
+    ],
   },
   {
-    key: 'growth',
-    name: 'Growth',
-    nameAr: 'جروث',
-    price: '499',
+    key: 'middle',
+    name: 'Middle',
+    nameAr: 'ميدل',
+    price: '2,999',
     period: '/mo',
     periodAr: '/شهر',
     highlighted: true,
-    features: ['3 AI agents', 'Order management', 'Advanced analytics', 'Priority support'],
-    featuresAr: ['٣ وكلاء ذكيين', 'إدارة الطلبات', 'تحليلات متقدمة', 'دعم مميز'],
+    features: [
+      '3 stores · 5 team members',
+      '24,000 AI credits / mo',
+      'Unlimited orders',
+      'All messaging platforms',
+      'Full CRM + marketing',
+    ],
+    featuresAr: [
+      '٣ متاجر · ٥ أعضاء فريق',
+      '٢٤٬٠٠٠ رصيد AI / شهر',
+      'طلبات بلا حدود',
+      'كل منصات المراسلة',
+      'CRM + تسويق كامل',
+    ],
   },
   {
     key: 'pro',
     name: 'Pro',
     nameAr: 'برو',
-    price: '999',
+    price: '4,999',
     period: '/mo',
     periodAr: '/شهر',
-    features: ['Unlimited agents', 'Multi-store', 'Custom integrations', 'Dedicated manager'],
-    featuresAr: ['وكلاء بلا حدود', 'متاجر متعددة', 'تكاملات مخصصة', 'مدير حساب مخصص'],
+    features: [
+      '3 stores · 5 team members',
+      '40,000 AI credits / mo',
+      'Unlimited orders (fair usage)',
+      'Full automation',
+      'Performance + AI insights',
+    ],
+    featuresAr: [
+      '٣ متاجر · ٥ أعضاء فريق',
+      '٤٠٬٠٠٠ رصيد AI / شهر',
+      'طلبات بلا حدود (استخدام عادل)',
+      'أتمتة كاملة',
+      'أداء + رؤى AI',
+    ],
   },
 ]
 
@@ -60,7 +94,7 @@ interface QuestionPricingCardProps {
 export default function QuestionPricingCard({ isAr = false, currency = 'EGP', plans = PRICING_PLANS }: QuestionPricingCardProps) {
   return (
     <div className="w-full max-w-md mx-auto mb-3">
-      <div className="grid grid-cols-1 xs:grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
         {plans.map((plan) => {
           const name = isAr ? plan.nameAr : plan.name
           const period = isAr ? plan.periodAr : plan.period
@@ -96,9 +130,6 @@ export default function QuestionPricingCard({ isAr = false, currency = 'EGP', pl
           )
         })}
       </div>
-      <p className="text-center text-[9px] text-gray-300 mt-1.5">
-        {isAr ? 'للعرض التوضيحي فقط — الأسعار الفعلية على sellioai.com/pricing' : 'For illustration only — actual pricing at sellioai.com/pricing'}
-      </p>
     </div>
   )
 }

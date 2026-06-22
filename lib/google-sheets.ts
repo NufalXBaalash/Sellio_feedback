@@ -7,6 +7,7 @@ interface FeedbackData {
   isUseful: string;
   feedback: string;
   timestamp: string;
+  sessionId?: string;
 }
 
 class GoogleSheetsService {
@@ -75,7 +76,8 @@ class GoogleSheetsService {
           data.email,
           data.isUseful,
           data.feedback,
-          data.timestamp
+          data.timestamp,
+          data.sessionId || ''
         ]
       ];
 
@@ -101,18 +103,18 @@ class GoogleSheetsService {
       // Check if the first row has headers
       const response = await this.sheets.spreadsheets.values.get({
         spreadsheetId: this.spreadsheetId,
-        range: 'A1:F1',
+        range: 'A1:G1',
       });
 
       const existingHeaders = response.data.values?.[0];
 
       // If no headers exist or they don't match our expected headers
       if (!existingHeaders || existingHeaders.length === 0) {
-        const headers = ['Name', 'Phone', 'Email', 'IsUseful', 'Feedback', 'Timestamp'];
+        const headers = ['Name', 'Phone', 'Email', 'IsUseful', 'Feedback', 'Timestamp', 'SessionId'];
 
         await this.sheets.spreadsheets.values.update({
           spreadsheetId: this.spreadsheetId,
-          range: 'A1:F1',
+          range: 'A1:G1',
           valueInputOption: 'USER_ENTERED',
           requestBody: {
             values: [headers],

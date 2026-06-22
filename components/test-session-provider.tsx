@@ -53,37 +53,46 @@ export function useTestSession() {
 }
 
 export function TestSessionProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<SessionState>(() => {
-    if (typeof window === 'undefined') return initialState
+  // Start from initialState on BOTH server and first client render, then
+  // restore the saved session AFTER mount. Reading localStorage in the
+  // initializer would make the first client render differ from the server
+  // (different step/language) and cause a hydration mismatch.
+  const [state, setState] = useState<SessionState>(initialState)
+  const [hydrated, setHydrated] = useState(false)
+
+  // Restore saved session from localStorage after mount.
+  useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY)
       const savedLang = localStorage.getItem(LANG_KEY) as Locale | null
       if (saved) {
         const parsed = JSON.parse(saved)
-        return {
+        setState({
           ...initialState,
           ...parsed,
-          surveyAnswers: { ...parsed.surveyAnswers },
+          surveyAnswers: { ...(parsed.surveyAnswers || {}) },
           merchantAnswers: { ...(parsed.merchantAnswers || {}) },
           language: savedLang || parsed.language || 'en',
           flowType: parsed.flowType === 'merchant' ? 'merchant' : 'customer',
           isSubmitting: false,
-        }
+        })
+      } else if (savedLang) {
+        setState(prev => ({ ...prev, language: savedLang }))
       }
-      return { ...initialState, language: savedLang || 'en' }
-    } catch {
-      return { ...initialState, language: (localStorage.getItem(LANG_KEY) as Locale) || 'en' }
-    }
-  })
+    } catch { /* ignore corrupt storage */ }
+    setHydrated(true)
+  }, [])
 
-  // Persist to localStorage
+  // Persist to localStorage (only after hydration, so we don't clobber the
+  // saved state with initialState before it has been restored).
   useEffect(() => {
+    if (!hydrated) return
     try {
       const { isSubmitting: _, ...toSave } = state
       localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave))
       localStorage.setItem(LANG_KEY, state.language)
     } catch { /* ignore quota errors */ }
-  }, [state])
+  }, [state, hydrated])
 
   // Set document direction
   useEffect(() => {

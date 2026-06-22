@@ -234,6 +234,7 @@ function MerchantSessionTable({ sessions }: { sessions: any[] }) {
                 <span className="text-xs text-gray-500 w-10 shrink-0">{s.language?.toUpperCase()}</span>
                 {s.m_willing_to_pay && <span className="text-xs font-semibold text-[#27AE60] w-12 shrink-0">Pay: {prettyKey(s.m_willing_to_pay)}</span>}
                 {s.m_merchant_nps != null && <span className="text-xs font-semibold text-blue-600 w-10 shrink-0">NPS {s.m_merchant_nps}</span>}
+                {s.contact_name && <span className="text-xs font-medium text-gray-700 max-w-[140px] truncate shrink-0" title={s.contact_name}>{s.contact_name}</span>}
                 <span className="text-xs text-gray-400 ml-auto shrink-0">{s.created_at ? new Date(s.created_at).toLocaleDateString() : '—'}</span>
                 <svg className={`w-4 h-4 text-gray-400 shrink-0 transition-transform ${isExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </button>
@@ -241,12 +242,40 @@ function MerchantSessionTable({ sessions }: { sessions: any[] }) {
               {isExpanded && (
                 <div className="px-4 pb-4 pt-2 border-t border-gray-100 bg-gray-50/50">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+                    {/* Contact details (joined from the reward-claim / feedback table) */}
+                    <div className="sm:col-span-2">
+                      <Label>Contact Details</Label>
+                      {(s.contact_name || s.contact_phone || s.contact_email) ? (
+                        <div className="mt-1 flex flex-wrap gap-x-6 gap-y-1 text-sm">
+                          {s.contact_name && <span className="text-gray-800 font-medium">{s.contact_name}</span>}
+                          {s.contact_phone && <a href={`tel:${s.contact_phone}`} className="text-blue-600 hover:underline">{s.contact_phone}</a>}
+                          {s.contact_email && <a href={`mailto:${s.contact_email}`} className="text-blue-600 hover:underline break-all">{s.contact_email}</a>}
+                        </div>
+                      ) : (
+                        <p className="mt-1 text-xs text-gray-400">No contact info claimed for this session.</p>
+                      )}
+                    </div>
+
+                    {/* Full funnel timing */}
                     <div className="sm:col-span-2">
                       <Label>Timing</Label>
                       <div className="flex flex-wrap gap-4 mt-1 text-xs text-gray-600">
+                        {s.landing_viewed_at && <span>Landed: {new Date(s.landing_viewed_at).toLocaleString()}</span>}
                         {s.instagram_clicked_at && <span>IG Clicked: {new Date(s.instagram_clicked_at).toLocaleString()}</span>}
+                        {s.test_started_at && <span>Test Started: {new Date(s.test_started_at).toLocaleString()}</span>}
+                        {s.test_returned_at && <span>Returned: {new Date(s.test_returned_at).toLocaleString()}</span>}
+                        {s.survey_started_at && <span>Survey Started: {new Date(s.survey_started_at).toLocaleString()}</span>}
                         {s.survey_completed_at && <span>Completed: {new Date(s.survey_completed_at).toLocaleString()}</span>}
                         {s.total_duration_seconds != null && <span>Duration: {Math.floor(s.total_duration_seconds / 60)}m {s.total_duration_seconds % 60}s</span>}
+                      </div>
+                    </div>
+
+                    {/* Flow + device metadata */}
+                    <div className="sm:col-span-2">
+                      <Label>Flow & Device</Label>
+                      <div className="mt-1 text-xs text-gray-600 space-y-0.5">
+                        <div>Flow: <span className="font-medium text-gray-700">Merchant</span> · Language: <span className="font-medium text-gray-700 uppercase">{s.language || '—'}</span> · Status: <span className="font-medium text-gray-700">{s.status}</span></div>
+                        {s.user_agent && <div className="text-gray-400 break-all">UA: {s.user_agent}</div>}
                       </div>
                     </div>
                     <div>
@@ -608,8 +637,8 @@ export default function AdminPage() {
                     </div>
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
                       <h3 className="text-lg font-bold text-gray-900 mb-4">Price Expectation</h3>
-                      <BarChart data={distToBars(merchantStats.priceExpectationDistribution, ['under_100','100_300','300_600','600_1000','over_1000'], {
-                        under_100: '< 100 EGP', '100_300': '100–300', '300_600': '300–600', '600_1000': '600–1k', over_1000: '> 1,000',
+                      <BarChart data={distToBars(merchantStats.priceExpectationDistribution, ['under_2000','2000_3000','3000_4000','4000_5000','over_5000'], {
+                        under_2000: '< 2k', '2000_3000': '2k–3k', '3000_4000': '3k–4k', '4000_5000': '4k–5k', over_5000: '> 5k',
                       })} colorClass="bg-purple-500" />
                     </div>
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">

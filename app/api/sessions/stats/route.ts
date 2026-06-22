@@ -27,6 +27,21 @@ export async function GET() {
 
     const sessions = (allSessions || []) as TestSession[]
 
+    // Pull reward-claim contacts and attach them to their sessions by session_id.
+    // The column was added by supabase-migration-feedback-session-id.sql; if the
+    // migration hasn't been run yet the select still succeeds (Supabase ignores
+    // unknown columns gracefully only on select(*) — selecting a missing column
+    // errors, so we guard with try/catch and fall back to no contacts).
+    const contacts = await fetchContactsBySession(supabase)
+    sessions.forEach(s => {
+      const c = contacts.get(s.session_id)
+      if (c) {
+        s.contact_name = c.name
+        s.contact_phone = c.phone
+        s.contact_email = c.email
+      }
+    })
+
     // Split by flow_type (rows created before the migration default to 'customer')
     const customerSessions = sessions.filter(s => (s.flow_type || 'customer') === 'customer')
     const merchantSessions = sessions.filter(s => s.flow_type === 'merchant')
@@ -42,6 +57,42 @@ export async function GET() {
 }
 
 // ---------- shared helpers ----------
+
+/**
+ * Fetch reward-claim contacts (name/phone/email) keyed by their session_id.
+ * Returns the latest claim per session when several exist. If the feedback
+ * table lacks the session_id column (migration not yet applied) it logs and
+ * returns an empty map so the dashboard still works — just without contacts.
+ */
+async function fetchContactsBySession(
+  client: NonNullable<typeof supabase>
+): Promise<Map<string, { name: string; phone: string; email: string }>> {
+  const map = new Map<string, { name: string; phone: string; email: string }>()
+  try {
+    const { data, error } = await client
+      .from('feedback')
+      .select('session_id, name, phone, email, created_at')
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      console.warn('feedback contact lookup failed:', error.message)
+      return map
+    }
+    for (const row of (data || []) as Array<{ session_id: string | null; name?: string | null; phone?: string | null; email?: string | null }>) {
+      if (!row.session_id) continue
+      // First seen wins because rows are newest-first → keeps the latest claim.
+      if (map.has(row.session_id)) continue
+      map.set(row.session_id, {
+        name: (row.name || '').trim(),
+        phone: (row.phone || '').trim(),
+        email: (row.email || '').trim(),
+      })
+    }
+  } catch (e) {
+    console.warn('feedback contact lookup threw:', e)
+  }
+  return map
+}
 
 function countDist(arr: TestSession[], key: keyof TestSession): Distribution {
   const dist: Distribution = {}
@@ -137,11 +188,11 @@ function computeCustomerStats(sessions: TestSession[]): CustomerSessionStats {
 // ---------- merchant pipeline ----------
 
 const PRICE_BUCKET_LABELS: Record<string, { en: string; ar: string }> = {
-  under_100: { en: 'Under 100 EGP', ar: 'أقل من ١٠٠ جنيه' },
-  '100_300': { en: '100–300 EGP', ar: '١٠٠–٣٠٠ جنيه' },
-  '300_600': { en: '300–600 EGP', ar: '٣٠٠–٦٠٠ جنيه' },
-  '600_1000': { en: '600–1,000 EGP', ar: '٦٠٠–١٠٠٠ جنيه' },
-  over_1000: { en: 'Over 1,000 EGP', ar: 'أكثر من ١٠٠٠ جنيه' },
+  under_2000: { en: 'Under 2,000 EGP', ar: 'أقل من ٢٠٠٠ جنيه' },
+  '2000_3000': { en: '2,000–3,000 EGP', ar: '٢٠٠٠–٣٠٠٠ جنيه' },
+  '3000_4000': { en: '3,000–4,000 EGP', ar: '٣٠٠٠–٤٠٠٠ جنيه' },
+  '4000_5000': { en: '4,000–5,000 EGP', ar: '٤٠٠٠–٥٠٠٠ جنيه' },
+  over_5000: { en: 'Over 5,000 EGP', ar: 'أكثر من ٥٠٠٠ جنيه' },
 }
 
 function modalBucket(dist: Distribution): string {

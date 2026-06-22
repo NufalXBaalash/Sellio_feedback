@@ -148,11 +148,11 @@ export default function StepSurveyMerchant() {
         <QuestionScale
           question={t('survey.merchant.m6_priceExpectation.question')}
           options={[
-            { key: 'under_100', label: t('survey.merchant.m6_priceExpectation.under100') },
-            { key: '100_300', label: t('survey.merchant.m6_priceExpectation.100to300') },
-            { key: '300_600', label: t('survey.merchant.m6_priceExpectation.300to600') },
-            { key: '600_1000', label: t('survey.merchant.m6_priceExpectation.600to1000') },
-            { key: 'over_1000', label: t('survey.merchant.m6_priceExpectation.over1000') },
+            { key: 'under_2000', label: t('survey.merchant.m6_priceExpectation.under2000') },
+            { key: '2000_3000', label: t('survey.merchant.m6_priceExpectation.2000to3000') },
+            { key: '3000_4000', label: t('survey.merchant.m6_priceExpectation.3000to4000') },
+            { key: '4000_5000', label: t('survey.merchant.m6_priceExpectation.4000to5000') },
+            { key: 'over_5000', label: t('survey.merchant.m6_priceExpectation.over5000') },
           ]}
           value={merchantAnswers.m_price_expectation}
           onChange={(v) => setMerchantAnswer('m_price_expectation', v)}

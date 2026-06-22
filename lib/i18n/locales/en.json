@@ -194,11 +194,11 @@
       },
       "m6_priceExpectation": {
         "question": "What monthly price range would feel fair to you for this service?",
-        "under100": "Less than 100 EGP",
-        "100to300": "100 – 300 EGP",
-        "300to600": "300 – 600 EGP",
-        "600to1000": "600 – 1,000 EGP",
-        "over1000": "More than 1,000 EGP"
+        "under2000": "Less than 2,000 EGP",
+        "2000to3000": "2,000 – 3,000 EGP",
+        "3000to4000": "3,000 – 4,000 EGP",
+        "4000to5000": "4,000 – 5,000 EGP",
+        "over5000": "More than 5,000 EGP"
       },
       "m7_pricingFair": {
         "question": "After seeing our pricing plans, how do you feel about them?",
